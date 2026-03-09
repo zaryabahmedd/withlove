@@ -50,6 +50,12 @@ export default function App() {
                 <Footer />
               </>
             } />
+            <Route path="/sample-2" element={
+              <>
+                <main><HomePage /></main>
+                <Footer />
+              </>
+            } />
             <Route path="/create" element={
               <main><CardEditor /></main>
             } />
