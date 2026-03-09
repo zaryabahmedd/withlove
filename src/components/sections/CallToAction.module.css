@@ -1,0 +1,361 @@
+/* ══════════════════════════════════════════
+   CTA Section — "With Love" brand
+   ══════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  padding: 6rem 2rem 5rem;
+  background: linear-gradient(170deg, #FFF5F7 0%, #FFF0F5 25%, #F8EDFF 55%, #EDFAFF 100%);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* ── Floating orbs ── */
+.orbPink {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 72, 122, 0.18) 0%, transparent 70%);
+  top: -80px;
+  left: -100px;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.orbPurple {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.14) 0%, transparent 70%);
+  bottom: -60px;
+  right: -80px;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+/* ── Sparkle field ── */
+.sparkleField {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  background: #F4487A;
+  box-shadow: 0 0 6px 1px rgba(244, 72, 122, 0.4);
+}
+
+/* ── Inner container ── */
+.inner {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── Card Fan ── */
+.fanWrap {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 200px;
+  width: 400px;
+  margin-bottom: 2.5rem;
+  perspective: 800px;
+}
+
+.fanCard {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transform-origin: center bottom;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  will-change: transform;
+}
+
+.fanImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.fanShine {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    125deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 48%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: fanShimmer 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fanShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Eyebrow ── */
+.eyebrow {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #F4487A;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── Heading ── */
+.heading {
+  font-family: 'Plus Jakarta Sans', 'Nunito', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #1c1c1e;
+  margin-bottom: 1rem;
+}
+
+.headingGrad {
+  background: linear-gradient(135deg, #F4487A 0%, #D63060 35%, #6C63FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Subtext ── */
+.subtext {
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  color: #6b7280;
+  line-height: 1.7;
+  font-weight: 500;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+/* ── Button Row ── */
+.buttonRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* Primary CTA */
+.ctaButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 1.05rem 2.6rem;
+  border: none;
+  border-radius: 100px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.06rem;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  background: linear-gradient(140deg, #F4487A 0%, #E83070 50%, #D42868 100%);
+  box-shadow:
+    0 8px 32px rgba(244, 72, 122, 0.35),
+    0 2px 8px rgba(244, 72, 122, 0.2);
+  transition: box-shadow 0.35s;
+  z-index: 1;
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: linear-gradient(140deg, #FF6B9D 0%, #F4487A 50%, #D42868 100%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: -1;
+}
+
+.ctaButton:hover::before {
+  opacity: 1;
+}
+
+.btnIcon {
+  font-size: 1rem;
+}
+
+.btnArrow {
+  font-size: 1.15rem;
+  margin-left: 2px;
+  transition: transform 0.3s;
+}
+
+.ctaButton:hover .btnArrow {
+  transform: translateX(4px);
+}
+
+/* Ripple */
+.ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Secondary button */
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1.05rem 2rem;
+  border: 2px solid rgba(244, 72, 122, 0.25);
+  border-radius: 100px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #F4487A;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.secondaryBtn:hover {
+  border-color: #F4487A;
+}
+
+/* ── Trust Signal ── */
+.trust {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trustAvatars {
+  display: flex;
+}
+
+.trustAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  margin-left: -8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trustAvatar:first-child {
+  margin-left: 0;
+}
+
+.trustText {
+  font-size: 0.82rem;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.trustText strong {
+  color: #6b7280;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .section {
+    padding: 4rem 1.25rem 3.5rem;
+  }
+
+  .fanWrap {
+    width: 300px;
+    height: 160px;
+  }
+
+  .fanCard {
+    width: 90px;
+    height: 120px;
+  }
+
+  .buttonRow {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .ctaButton,
+  .secondaryBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .trust {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* ══ DARK MODE ══ */
+:global([data-theme="dark"]) .section {
+  background: linear-gradient(170deg, #0E080D 0%, #130B11 25%, #11091A 55%, #0C0A12 100%);
+}
+
+:global([data-theme="dark"]) .orbPink {
+  background: radial-gradient(circle, rgba(244, 72, 122, 0.28) 0%, transparent 70%);
+}
+
+:global([data-theme="dark"]) .orbPurple {
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.22) 0%, transparent 70%);
+}
+
+:global([data-theme="dark"]) .eyebrow {
+  color: #F06898;
+}
+
+:global([data-theme="dark"]) .heading {
+  color: #F5E8EE;
+}
+
+:global([data-theme="dark"]) .subtext {
+  color: #A87888;
+}
+
+:global([data-theme="dark"]) .secondaryBtn {
+  color: #F06898;
+  border-color: rgba(244, 72, 122, 0.35);
+}
+
+:global([data-theme="dark"]) .secondaryBtn:hover {
+  background-color: rgba(244, 72, 122, 0.1);
+  border-color: rgba(244, 72, 122, 0.55);
+}
+
+:global([data-theme="dark"]) .trustText {
+  color: #7A5870;
+}
+
+:global([data-theme="dark"]) .trustText strong {
+  color: #A87888;
+}

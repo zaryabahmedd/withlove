@@ -1,0 +1,238 @@
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import styles from './Footer.module.css'
+
+const COLS = {
+  Product:   ['Create a Card', 'Browse Themes', 'Pricing', 'My Cards', 'Bulk Send'],
+  Occasions: ['Birthday', 'Anniversary', 'Congratulations', 'Thank You', 'Get Well Soon'],
+  Company:   ['About Us', 'Blog', 'Careers', 'Press Kit', 'Legal'],
+}
+
+const SOCIALS = [
+  {
+    label: 'Instagram',
+    href: '#',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+    ),
+  },
+  {
+    label: 'TikTok',
+    href: '#',
+    icon: (
+      <svg width="16" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.84a8.16 8.16 0 0 0 4.77 1.52V6.92a4.86 4.86 0 0 1-1-.23z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'X (Twitter)',
+    href: '#',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Pinterest',
+    href: '#',
+    icon: (
+      <svg width="16" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+      </svg>
+    ),
+  },
+]
+
+export default function Footer() {
+  const [email, setEmail] = useState('')
+  const [sent, setSent] = useState(false)
+
+  return (
+    <footer className={styles.footer} id="footer">
+      {/* Aurora background blobs */}
+      <div className={styles.aurora1} />
+      <div className={styles.aurora2} />
+      <div className={styles.aurora3} />
+
+      {/* ── TOP: Brand + Newsletter ── */}
+      <div className={styles.topSection}>
+        <motion.div
+          className={styles.brand}
+          initial={{ opacity: 0, x: -24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <img
+            src="/With_Love_transparent_1767397236984-CNLkaJTe.png"
+            alt="cardhazza"
+            className={styles.brandLogo}
+          />
+          <p className={styles.brandTagline}>
+            For every moment that deserves<br />more than a message.
+          </p>
+          <div className={styles.brandBadges}>
+            <span className={styles.brandBadge}>✦ Free forever</span>
+            <span className={styles.brandBadge}>♡ 2.4M+ cards sent</span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className={styles.newsletterBlock}
+          initial={{ opacity: 0, x: 24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className={styles.newsletterHead}>Stay in the loop</p>
+          <p className={styles.newsletterSub}>
+            Card inspiration, new themes, and thoughtful ideas — straight to your inbox.
+          </p>
+
+          <AnimatePresence mode="wait">
+            {!sent ? (
+              <motion.form
+                key="form"
+                className={styles.newsletterForm}
+                onSubmit={(e) => { e.preventDefault(); if (email.trim()) setSent(true) }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, y: -8 }}
+              >
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className={styles.emailInput}
+                  required
+                />
+                <motion.button
+                  type="submit"
+                  className={styles.subBtn}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span className={styles.subShimmer} />
+                  Subscribe ✦
+                </motion.button>
+              </motion.form>
+            ) : (
+              <motion.p
+                key="sent"
+                className={styles.sentMsg}
+                initial={{ opacity: 0, scale: 0.92, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: 'spring', stiffness: 220, damping: 18 }}
+              >
+                ✦ You're in — something beautiful is heading your way.
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+
+      {/* ── MIDDLE: Link columns ── */}
+      <div className={styles.linksSection}>
+        {Object.entries(COLS).map(([col, items], ci) => (
+          <motion.div
+            key={col}
+            className={styles.linkCol}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.08 * ci, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className={styles.colHead}>{col}</p>
+            {items.map((item) => (
+              <motion.a
+                key={item}
+                href="#"
+                className={styles.footLink}
+                whileHover={{ x: 5, color: 'rgba(255,140,176,0.9)' }}
+                transition={{ duration: 0.15 }}
+              >
+                {item}
+              </motion.a>
+            ))}
+          </motion.div>
+        ))}
+
+        {/* Follow us column */}
+        <motion.div
+          className={styles.linkCol}
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.24, duration: 0.55 }}
+        >
+          <p className={styles.colHead}>Follow us</p>
+          <div className={styles.socialRow}>
+            {SOCIALS.map((s) => (
+              <motion.a
+                key={s.label}
+                href={s.href}
+                className={styles.socialIcon}
+                aria-label={s.label}
+                whileHover={{
+                  scale: 1.14,
+                  borderColor: 'rgba(244,72,122,0.7)',
+                  color: '#F4487A',
+                  boxShadow: '0 0 22px rgba(244,72,122,0.3)',
+                  backgroundColor: 'rgba(244,72,122,0.07)',
+                }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {s.icon}
+              </motion.a>
+            ))}
+          </div>
+          <motion.a
+            href="mailto:hello@cardhazza.com"
+            className={styles.contactEmail}
+            whileHover={{ color: '#FF8CB0' }}
+          >
+            hello@cardhazza.com
+          </motion.a>
+        </motion.div>
+      </div>
+
+      {/* ── Gradient divider ── */}
+      <div className={styles.gradDivider} />
+
+      {/* ── BOTTOM: Copyright strip ── */}
+      <div className={styles.bottomStrip}>
+        <p className={styles.copyright}>© 2026 cardhazza. All rights reserved.</p>
+
+        <p className={styles.madeWith}>
+          Made with{' '}
+          <motion.span
+            animate={{ scale: [1, 1.4, 1] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+            style={{ display: 'inline-block', color: '#F4487A' }}
+          >
+            ♡
+          </motion.span>
+          {' '}for the people you love
+        </p>
+
+        <div className={styles.legalLinks}>
+          {['Privacy', 'Terms', 'Cookies'].map((item, i) => (
+            <span key={item} className={styles.legalItem}>
+              {i > 0 && <span className={styles.dot}>·</span>}
+              <motion.a href="#" className={styles.legalLink} whileHover={{ color: '#FF8CB0' }}>
+                {item}
+              </motion.a>
+            </span>
+          ))}
+        </div>
+      </div>
+    </footer>
+  )
+}

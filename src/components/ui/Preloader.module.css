@@ -1,0 +1,235 @@
+/* ── Root overlay ── */
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: all;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+/* ── Gradient background ── */
+.bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #fff5f7 0%,
+    #fff 55%,
+    #f0f4ff 100%
+  );
+}
+
+/* ── Hero card (large, centre stage) ── */
+.heroCard {
+  position: relative;
+  z-index: 10;
+  max-width: min(80vw, 540px);
+  max-height: 72vh;
+  border-radius: 18px;
+  overflow: hidden;
+  line-height: 0;
+  box-shadow:
+    0 30px 80px rgba(244, 72, 122, 0.22),
+    0 10px 30px rgba(0, 0, 0, 0.14);
+  will-change: transform;
+}
+
+.heroImg {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(80vw, 540px);
+  max-height: 72vh;
+  object-fit: unset;
+}
+
+/* Soft glow rim around hero card */
+.heroGlow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  background: transparent;
+  box-shadow: 0 0 60px 16px rgba(244, 72, 122, 0.18);
+  pointer-events: none;
+}
+
+/* Diagonal shine sweep */
+.heroShine {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(255,255,255,0.38) 48%,
+    transparent 70%
+  );
+  background-size: 280% 100%;
+  animation: heroSweep 2.2s ease-in-out infinite 0.9s;
+  pointer-events: none;
+}
+
+@keyframes heroSweep {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Brand logo below hero card ── */
+.brandLogo {
+  position: absolute;
+  bottom: calc(50% - clamp(120px, 19vw, 240px) - 52px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 11;
+  width: clamp(90px, 12vw, 140px);
+  height: auto;
+  filter: drop-shadow(0 4px 14px rgba(244, 72, 122, 0.2));
+}
+
+/* ── Burst cards (fly from centre) ── */
+.burstCard {
+  position: absolute;
+  z-index: 4;
+  /* size set fully by scale, base is around 420x280 of the hero */
+  width: clamp(200px, 32vw, 420px);
+  aspect-ratio: 1.48 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.18),
+    0 3px 10px rgba(0, 0, 0, 0.10);
+  will-change: transform, opacity;
+  /* Translate origin so cards appear to come FROM the hero card */
+  transform-origin: center center;
+}
+
+.burstImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Subtle sheen on burst cards */
+.cardSheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    130deg,
+    transparent 35%,
+    rgba(255,255,255,0.22) 52%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+
+/* ── Split-curtain panels ── */
+.panels {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.panel {
+  flex: 1;
+  background: #fff;
+}
+
+/* ── Petal particles ── */
+.petal {
+  position: absolute;
+  font-size: 1rem;
+  color: #F4487A;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+/* ── Center content ── */
+.center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+/* ── Logo ── */
+.logoWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulseRing {
+  position: absolute;
+  inset: -24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 72, 122, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 20px rgba(244, 72, 122, 0.22));
+}
+
+/* ── Tagline ── */
+.tagline {
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin: 0;
+}
+
+/* ── Progress bar ── */
+.track {
+  width: 220px;
+  height: 2px;
+  background: rgba(244, 72, 122, 0.15);
+  border-radius: 100px;
+  overflow: hidden;
+  transform-origin: left;
+}
+
+.bar {
+  height: 100%;
+  background: linear-gradient(90deg, #F4487A, #FF8CB0);
+  border-radius: 100px;
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* ── Counter ── */
+.counter {
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #1c1c1e;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.pct {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #F4487A;
+  margin-left: 2px;
+}

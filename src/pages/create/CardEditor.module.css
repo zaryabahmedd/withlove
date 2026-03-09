@@ -1,0 +1,1245 @@
+/* ═══════════════════════════════════════════
+   CARD EDITOR — Scoped Module Styles
+═══════════════════════════════════════════ */
+
+/* ── Page wrapper ── */
+.editorPage {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 88px; /* offset for fixed navbar */
+  background: #fffdf5;
+  font-family: 'Nunito', system-ui, sans-serif;
+}
+
+/* ── Occasion bar ── */
+.occasionBar {
+  position: sticky;
+  top: 88px; /* stick just below the fixed navbar */
+  z-index: 50;
+  border-bottom: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(253, 248, 232, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.occasionInner {
+  padding: 0.875rem 1.5rem;
+}
+
+.occasionScroll {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.occasionScroll::-webkit-scrollbar { display: none; }
+
+.occasionBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 53, 15, 0.12);
+  background: rgba(255, 255, 255, 0.6);
+  color: rgba(120, 53, 15, 0.65);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.occasionBtn:hover {
+  border-color: rgba(180, 83, 9, 0.3);
+  background: #fff;
+  color: rgba(120, 53, 15, 0.85);
+}
+.occasionBtn.active {
+  border-color: rgba(180, 83, 9, 0.3);
+  background: #d97706;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.2);
+}
+
+/* ── Main layout ── */
+.editorLayout {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .editorLayout {
+    flex-direction: row;
+    min-height: calc(100vh - 156px);
+  }
+}
+
+/* ── Left panel: form ── */
+.formPanel {
+  width: 100%;
+  border-right: none;
+}
+
+@media (min-width: 1024px) {
+  .formPanel {
+    width: 460px;
+    min-width: 460px;
+    border-right: 1px solid rgba(120, 53, 15, 0.06);
+  }
+}
+
+.formScroll {
+  padding: 2rem 1.75rem 3rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.formScroll::-webkit-scrollbar { display: none; }
+
+@media (min-width: 1024px) {
+  .formScroll {
+    height: calc(100vh - 156px); /* 88px navbar + 68px occasion bar */
+  }
+}
+
+/* ── Back link ── */
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(180, 83, 9, 0.5);
+  text-decoration: none;
+  margin-bottom: 1.75rem;
+  transition: color 0.2s;
+}
+.backLink:hover { color: rgba(120, 53, 15, 0.8); }
+.backLink svg { width: 16px; height: 16px; }
+
+/* ── Section labels ── */
+.sectionLabel {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(120, 53, 15, 0.5);
+}
+
+/* ── Section groups ── */
+.formGroup {
+  margin-bottom: 1.75rem;
+}
+.formGroupLg {
+  margin-bottom: 2.25rem;
+}
+
+/* ── Template selector ── */
+.templateScroll {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+.templateScroll::-webkit-scrollbar { display: none; }
+
+.templateCard {
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 2px solid rgba(120, 53, 15, 0.08);
+  padding: 5px;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+.templateCard:hover {
+  border-color: rgba(180, 83, 9, 0.35);
+}
+.templateCard.active {
+  border-color: #d97706;
+  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.15);
+}
+
+.templateInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 80px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 6px;
+}
+
+.templateName {
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.templateDesc {
+  font-size: 7px;
+  opacity: 0.5;
+  line-height: 1.3;
+}
+
+.templateCheck {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #d97706;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.templateCheck svg { width: 12px; height: 12px; color: #fff; }
+
+/* ── Collapsible row (colors, more options) ── */
+.collapseBtn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  color: rgba(120, 53, 15, 0.55);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.collapseBtn:hover { background: #fff; }
+
+.collapseBtnLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.collapseBtnLeft svg { width: 16px; height: 16px; }
+
+.collapseBtnRight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.collapseBtnRight svg {
+  width: 16px;
+  height: 16px;
+  color: rgba(120, 53, 15, 0.35);
+  transition: transform 0.2s;
+}
+.collapseBtnRight svg.rotated { transform: rotate(180deg); }
+
+.colorDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(120, 53, 15, 0.1);
+}
+
+/* ── Color panel ── */
+.colorPanel {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.colorPanelLabel {
+  margin-bottom: 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(120, 53, 15, 0.4);
+}
+
+.presetGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.presetBtn {
+  cursor: pointer;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  padding: 0.5rem;
+  text-align: center;
+  transition: all 0.2s;
+  background: transparent;
+}
+.presetBtn:hover { border-color: rgba(180, 83, 9, 0.25); }
+.presetBtn.active { border-color: #d97706; background: #fffbeb; }
+
+.presetDots {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+  justify-content: center;
+}
+.presetDots span {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.presetName {
+  font-size: 9px;
+  color: rgba(120, 53, 15, 0.45);
+  font-weight: 600;
+}
+
+.colorRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.colorInputWrap {
+  flex: 1;
+}
+.colorInputLabel {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 10px;
+  color: rgba(120, 53, 15, 0.4);
+}
+.colorInputBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: #fff;
+  padding: 0.375rem 0.5rem;
+}
+.colorInputBox input[type="color"] {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+}
+.colorInputBox span {
+  font-size: 0.75rem;
+  color: rgba(120, 53, 15, 0.45);
+}
+
+.resetBtn {
+  margin-top: 0.75rem;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: transparent;
+  font-size: 0.75rem;
+  color: rgba(120, 53, 15, 0.45);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.resetBtn:hover { background: #fffbeb; }
+
+/* ── Toggle row ── */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.75rem;
+}
+.toggleRowLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(120, 53, 15, 0.55);
+}
+.toggleRowLabel svg { width: 16px; height: 16px; }
+
+.toggleSwitch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+.toggleSwitch.off { background: rgba(120, 53, 15, 0.12); }
+.toggleSwitch.on { background: #d97706; }
+
+/* ── Text inputs ── */
+.textInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  font-family: 'Nunito', sans-serif;
+  color: #1c1c1e;
+  outline: none;
+  transition: all 0.2s;
+  display: block;
+}
+.textInput::placeholder { color: rgba(120, 53, 15, 0.3); }
+.textInput:focus {
+  border-color: rgba(180, 83, 9, 0.35);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.06);
+}
+
+textarea.textInput {
+  resize: none;
+  min-height: 120px;
+}
+
+/* ── Media buttons row ── */
+.mediaBtns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mediaBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  color: rgba(120, 53, 15, 0.55);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mediaBtn:hover {
+  border-color: rgba(180, 83, 9, 0.25);
+  background: #fffbeb;
+  color: rgba(120, 53, 15, 0.8);
+}
+.mediaBtn svg { width: 16px; height: 16px; }
+
+/* ── Voice dropdown ── */
+.voiceDropWrap { position: relative; }
+
+.voiceDrop {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 20;
+  margin-top: 0.5rem;
+  width: 192px;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(120, 53, 15, 0.08);
+}
+
+.voiceDropBtn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: rgba(120, 53, 15, 0.6);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.voiceDropBtn:hover {
+  background: #fffbeb;
+  color: rgba(120, 53, 15, 0.8);
+}
+.voiceDropBtn svg { width: 16px; height: 16px; }
+
+.voiceDropDiv {
+  height: 1px;
+  margin: 0 0.75rem;
+  background: rgba(120, 53, 15, 0.06);
+}
+
+/* ── Recording indicator ── */
+.recordingBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: #fef2f2;
+}
+
+.recordingLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.recordingDot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+}
+.recordingDot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: recPulse 1.2s ease-in-out infinite;
+}
+.recordingDot::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+  background: #ef4444;
+}
+
+@keyframes recPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.recordingText {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.stopBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.stopBtn:hover { background: #dc2626; }
+.stopBtn svg { width: 12px; height: 12px; }
+
+/* ── Uploaded file chips ── */
+.uploadedList {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.uploadedChip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: #ecfdf5;
+}
+
+.uploadedChipLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #047857;
+  min-width: 0;
+}
+.uploadedChipLeft svg { width: 16px; height: 16px; flex-shrink: 0; }
+.uploadedChipLeft span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uploadedChipX {
+  color: rgba(120, 53, 15, 0.35);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 2px;
+  transition: color 0.15s;
+}
+.uploadedChipX:hover { color: #ef4444; }
+.uploadedChipX svg { width: 16px; height: 16px; }
+
+/* ── More options link ── */
+.moreOptionsBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(180, 83, 9, 0.45);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+.moreOptionsBtn:hover { color: rgba(120, 53, 15, 0.7); }
+.moreOptionsBtn svg { width: 16px; height: 16px; }
+
+.moreOptionsPanel {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.optionCard {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.optionCardLabel {
+  margin-bottom: 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(120, 53, 15, 0.4);
+}
+
+.optionCardInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  font-family: 'Nunito', sans-serif;
+  color: #1c1c1e;
+  outline: none;
+}
+.optionCardInput::placeholder { color: rgba(120, 53, 15, 0.3); }
+
+/* ── Mobile preview button ── */
+.mobilePreviewBtn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  color: rgba(120, 53, 15, 0.55);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mobilePreviewBtn:hover {
+  border-color: rgba(180, 83, 9, 0.2);
+  background: #fff;
+}
+.mobilePreviewBtn svg { width: 16px; height: 16px; }
+
+@media (min-width: 1024px) {
+  .mobilePreviewBtn { display: none; }
+}
+
+/* ── Send button ── */
+.sendBtn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  background: linear-gradient(to right, #f59e0b, #f97316, #f43f5e);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25);
+  transition: all 0.2s;
+}
+.sendBtn:hover {
+  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.35);
+  transform: translateY(-1px);
+}
+.sendBtn:active { transform: translateY(0) scale(0.98); }
+.sendBtn svg { width: 20px; height: 20px; }
+
+/* ── Right panel: preview ── */
+.previewPanel {
+  display: none;
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .previewPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 156px);
+    position: sticky;
+    top: 156px;
+    background: linear-gradient(160deg, #fffdf5 0%, #fdf6e3 50%, #fef9ee 100%);
+    border-left: 1px solid rgba(120, 53, 15, 0.06);
+    padding: 2.5rem 3rem;
+    overflow-y: auto;
+  }
+}
+
+.previewTopBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.previewLabel {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(120, 53, 15, 0.3);
+  user-select: none;
+}
+
+.previewCaption {
+  margin-top: 1.75rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(120, 53, 15, 0.25);
+  user-select: none;
+}
+
+.previewEntranceBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 53, 15, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  color: rgba(120, 53, 15, 0.45);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s;
+}
+.previewEntranceBtn:hover {
+  background: #fff;
+  border-color: rgba(180, 83, 9, 0.25);
+  color: rgba(120, 53, 15, 0.75);
+}
+.previewEntranceBtn svg { width: 16px; height: 16px; }
+
+/* ── Overlay (mobile preview, camera, share) ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(69, 26, 3, 0.35);
+  padding: 1rem;
+  backdrop-filter: blur(6px);
+}
+
+.overlayCard {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+}
+
+.overlayClose {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  color: #78350f;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.overlayClose svg { width: 20px; height: 20px; }
+
+/* ── Camera modal ── */
+.cameraModal {
+  width: 100%;
+  max-width: 32rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: #fefbec;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+}
+
+.cameraVideo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+.cameraVideo video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.cameraTimer {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.cameraControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.cameraCancelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  color: rgba(120, 53, 15, 0.55);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cameraCancelBtn:hover { background: #fff; }
+.cameraCancelBtn svg { width: 16px; height: 16px; }
+
+.cameraStopBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cameraStopBtn:hover { background: #dc2626; }
+.cameraStopBtn svg { width: 14px; height: 14px; }
+
+/* ── Share modal ── */
+.shareModal {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: #fefbec;
+  padding: 2rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+}
+
+.shareModalClose {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: none;
+  border: none;
+  color: rgba(120, 53, 15, 0.35);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.15s;
+}
+.shareModalClose:hover { color: #78350f; }
+.shareModalClose svg { width: 20px; height: 20px; }
+
+.shareModalCenter { text-align: center; margin-bottom: 1.5rem; }
+
+.shareIconCircle {
+  margin: 0 auto 1rem;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.2);
+}
+.shareIconCircle svg { width: 32px; height: 32px; color: #fff; }
+
+.shareTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #451a03;
+  margin: 0 0 0.5rem;
+}
+
+.shareSubtitle {
+  font-size: 0.875rem;
+  color: rgba(120, 53, 15, 0.45);
+  margin: 0;
+}
+
+.shareLinkRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+}
+.shareLinkRow input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 0.875rem;
+  color: #78350f;
+  outline: none;
+  min-width: 0;
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: #d97706;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.copyBtn:hover { background: #b45309; }
+.copyBtn svg { width: 16px; height: 16px; }
+
+.shareActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.shareSecondaryBtn {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(120, 53, 15, 0.5);
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s;
+}
+.shareSecondaryBtn:hover { background: #fffbeb; }
+
+.shareHomeLink {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(120, 53, 15, 0.06);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #78350f;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.shareHomeLink:hover { background: rgba(120, 53, 15, 0.12); }
+
+/* ════════════════════════════════════════════
+   DARK MODE — comprehensive overrides
+   All amber/brown text → white/light tones
+════════════════════════════════════════════ */
+
+/* ── Page & layout ── */
+:global([data-theme="dark"]) .editorPage {
+  background: #0a0812;
+}
+:global([data-theme="dark"]) .occasionBar {
+  background: rgba(10, 8, 18, 0.97);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+:global([data-theme="dark"]) .occasionBtn {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+}
+:global([data-theme="dark"]) .occasionBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+}
+:global([data-theme="dark"]) .occasionBtn.active {
+  background: #d97706;
+  color: #fff;
+  border-color: rgba(217, 119, 6, 0.45);
+}
+:global([data-theme="dark"]) .formPanel {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Labels & navigation ── */
+:global([data-theme="dark"]) .sectionLabel  { color: rgba(255, 255, 255, 0.32); }
+:global([data-theme="dark"]) .backLink      { color: rgba(255, 255, 255, 0.32); }
+:global([data-theme="dark"]) .backLink:hover { color: rgba(255, 255, 255, 0.7); }
+
+/* ── Text inputs ── */
+:global([data-theme="dark"]) .textInput {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e8e3ff;
+}
+:global([data-theme="dark"]) .textInput::placeholder { color: rgba(255, 255, 255, 0.22); }
+:global([data-theme="dark"]) .textInput:focus {
+  border-color: rgba(217, 119, 6, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+}
+
+/* ── Template cards ── */
+:global([data-theme="dark"]) .templateCard {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+:global([data-theme="dark"]) .templateCard:hover  { border-color: rgba(217, 119, 6, 0.35); }
+:global([data-theme="dark"]) .templateCard.active {
+  border-color: #d97706;
+  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.2);
+}
+
+/* ── Color customization ── */
+:global([data-theme="dark"]) .collapseBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.55);
+}
+:global([data-theme="dark"]) .collapseBtn:hover { background: rgba(255, 255, 255, 0.08); }
+:global([data-theme="dark"]) .colorPanel {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+}
+:global([data-theme="dark"]) .colorPanelLabel { color: rgba(255, 255, 255, 0.30); }
+:global([data-theme="dark"]) .presetBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: transparent;
+}
+:global([data-theme="dark"]) .presetBtn:hover  { border-color: rgba(217, 119, 6, 0.3); }
+:global([data-theme="dark"]) .presetBtn.active {
+  border-color: #d97706;
+  background: rgba(217, 119, 6, 0.1);
+}
+:global([data-theme="dark"]) .presetName { color: rgba(255, 255, 255, 0.38); }
+:global([data-theme="dark"]) .colorInputBox {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.06);
+}
+:global([data-theme="dark"]) .colorInputBox span { color: rgba(255, 255, 255, 0.4); }
+:global([data-theme="dark"]) .colorInputLabel { color: rgba(255, 255, 255, 0.33); }
+:global([data-theme="dark"]) .colorDot { border-color: rgba(255, 255, 255, 0.1); }
+:global([data-theme="dark"]) .resetBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.38);
+}
+:global([data-theme="dark"]) .resetBtn:hover { background: rgba(255, 255, 255, 0.05); }
+
+/* ── Toggle row ── */
+:global([data-theme="dark"]) .toggleRow {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
+}
+:global([data-theme="dark"]) .toggleRowLabel { color: rgba(255, 255, 255, 0.5); }
+:global([data-theme="dark"]) .toggleSwitch.off { background: rgba(255, 255, 255, 0.12); }
+
+/* ── Media buttons ── */
+:global([data-theme="dark"]) .mediaBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.55);
+}
+:global([data-theme="dark"]) .mediaBtn:hover {
+  border-color: rgba(217, 119, 6, 0.3);
+  background: rgba(217, 119, 6, 0.07);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── Voice dropdown ── */
+:global([data-theme="dark"]) .voiceDrop {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: #15111e;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+:global([data-theme="dark"]) .voiceDropBtn { color: rgba(255, 255, 255, 0.55); }
+:global([data-theme="dark"]) .voiceDropBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.88);
+}
+:global([data-theme="dark"]) .voiceDropDiv { background: rgba(255, 255, 255, 0.06); }
+
+/* ── Uploaded chips ── */
+:global([data-theme="dark"]) .uploadedChip {
+  border-color: rgba(16, 185, 129, 0.18);
+  background: rgba(4, 120, 87, 0.1);
+}
+:global([data-theme="dark"]) .uploadedChipLeft { color: #34d399; }
+:global([data-theme="dark"]) .uploadedChipX   { color: rgba(255, 255, 255, 0.28); }
+:global([data-theme="dark"]) .uploadedChipX:hover { color: #f87171; }
+
+/* ── More options ── */
+:global([data-theme="dark"]) .moreOptionsBtn { color: rgba(255, 255, 255, 0.38); }
+:global([data-theme="dark"]) .moreOptionsBtn:hover { color: rgba(255, 255, 255, 0.72); }
+:global([data-theme="dark"]) .optionCard {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
+}
+:global([data-theme="dark"]) .optionCardLabel { color: rgba(255, 255, 255, 0.30); }
+:global([data-theme="dark"]) .optionCardInput {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e8e3ff;
+}
+:global([data-theme="dark"]) .optionCardInput::placeholder { color: rgba(255, 255, 255, 0.22); }
+
+/* ── Mobile preview button ── */
+:global([data-theme="dark"]) .mobilePreviewBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.5);
+}
+:global([data-theme="dark"]) .mobilePreviewBtn:hover {
+  border-color: rgba(217, 119, 6, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Send button ── */
+:global([data-theme="dark"]) .sendBtn {
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.15);
+}
+
+/* ── Preview panel ── */
+:global([data-theme="dark"]) .previewPanel {
+  background: linear-gradient(160deg, #0a0812 0%, #0d0a18 50%, #0b0913 100%);
+  border-color: rgba(255, 255, 255, 0.04);
+}
+:global([data-theme="dark"]) .previewLabel {
+  color: rgba(255, 255, 255, 0.18);
+}
+:global([data-theme="dark"]) .previewCaption {
+  color: rgba(255, 255, 255, 0.14);
+}
+:global([data-theme="dark"]) .previewEntranceBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.35);
+}
+:global([data-theme="dark"]) .previewEntranceBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Overlays & modals ── */
+:global([data-theme="dark"]) .overlayClose {
+  background: rgba(25, 18, 40, 0.92);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
+:global([data-theme="dark"]) .cameraModal {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: #100d1a;
+}
+:global([data-theme="dark"]) .cameraCancelBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.5);
+}
+:global([data-theme="dark"]) .cameraCancelBtn:hover { background: rgba(255, 255, 255, 0.09); }
+
+/* ── Share modal ── */
+:global([data-theme="dark"]) .shareModal {
+  border-color: rgba(255, 255, 255, 0.06);
+  background: #100d1a;
+}
+:global([data-theme="dark"]) .shareModalClose       { color: rgba(255, 255, 255, 0.30); }
+:global([data-theme="dark"]) .shareModalClose:hover { color: rgba(255, 255, 255, 0.72); }
+:global([data-theme="dark"]) .shareTitle    { color: #e8e3ff; }
+:global([data-theme="dark"]) .shareSubtitle { color: rgba(255, 255, 255, 0.38); }
+:global([data-theme="dark"]) .shareLinkRow {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+}
+:global([data-theme="dark"]) .shareLinkRow input { color: rgba(255, 255, 255, 0.78); }
+:global([data-theme="dark"]) .shareSecondaryBtn {
+  border-color: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.45);
+}
+:global([data-theme="dark"]) .shareSecondaryBtn:hover { background: rgba(255, 255, 255, 0.06); }
+:global([data-theme="dark"]) .shareHomeLink {
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.78);
+}
+:global([data-theme="dark"]) .shareHomeLink:hover { background: rgba(255, 255, 255, 0.12); }

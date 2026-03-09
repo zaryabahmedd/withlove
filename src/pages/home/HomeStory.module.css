@@ -1,0 +1,169 @@
+/* ═══ EDITORIAL STORY / ABOUT ═══ */
+.section {
+  position: relative;
+  padding: 8rem 0;
+  background: #FFF5F7;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  margin-bottom: 5rem;
+}
+
+/* Left quote side */
+.quoteSide {
+  position: sticky;
+  top: 6rem;
+}
+
+.bigQuote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  font-weight: 900;
+  color: #1c1c1e;
+  line-height: 1.15;
+}
+
+.quoteAccent {
+  background: linear-gradient(135deg, #F4487A, #FF8CB0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Right body side */
+.bodySide {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.body {
+  font-size: 1.05rem;
+  color: rgba(28,28,30,0.58);
+  line-height: 1.75;
+}
+
+/* Stats */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.statNum {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #D93060, #F4487A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: rgba(28,28,30,0.38);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Values strip */
+.valuesStrip {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.value {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.valueIcon {
+  font-size: 1.1rem;
+}
+
+.valueLabel {
+  font-size: 0.85rem;
+  color: rgba(28,28,30,0.48);
+  font-weight: 600;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .quoteSide {
+    position: static;
+  }
+  .statsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .valuesStrip {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+}
+
+/* ══════════════════════════════════
+   DARK MODE
+══════════════════════════════════ */
+:global([data-theme="dark"]) .section {
+  background: #0F0F0F;
+}
+
+:global([data-theme="dark"]) .bigQuote {
+  color: #fff;
+}
+
+:global([data-theme="dark"]) .body {
+  color: rgba(255,255,255,0.55);
+}
+
+:global([data-theme="dark"]) .statsRow {
+  border-top-color: rgba(255,255,255,0.08);
+}
+
+:global([data-theme="dark"]) .statNum {
+  background: linear-gradient(135deg, #C8A96E, #E8D5A6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:global([data-theme="dark"]) .statLabel {
+  color: rgba(255,255,255,0.35);
+}
+
+:global([data-theme="dark"]) .valuesStrip {
+  border-top-color: rgba(255,255,255,0.06);
+}
+
+:global([data-theme="dark"]) .valueLabel {
+  color: rgba(255,255,255,0.45);
+}

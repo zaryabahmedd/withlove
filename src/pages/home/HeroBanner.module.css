@@ -1,0 +1,333 @@
+/* ═══ EDITORIAL HERO BANNER ═══ */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Soft pink blobs — light mode */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: -120px;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 45%,
+    rgba(255,160,180,0.35) 0%,
+    rgba(255,200,210,0.15) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -80px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 55% 55%,
+    rgba(255,210,160,0.2) 0%,
+    rgba(255,230,200,0.1) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Side label ── */
+.sideLabel {
+  position: absolute;
+  left: 2.5rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(28,28,30,0.28);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  white-space: nowrap;
+  z-index: 10;
+  font-family: 'Nunito', sans-serif;
+}
+
+.sideDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #F4487A;
+  display: inline-block;
+}
+
+/* ── Scattered card images ── */
+.card {
+  position: absolute;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(244,72,122,0.08);
+  cursor: pointer;
+  will-change: transform;
+  z-index: 2;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Position 1: Top-left — stacked collage feel */
+.pos1 {
+  top: 8%;
+  left: 3%;
+  width: clamp(130px, 13vw, 210px);
+  aspect-ratio: 3/4;
+}
+
+/* Position 2: Upper left — between pos1 and center */
+.pos2 {
+  top: 14%;
+  left: 15%;
+  width: clamp(100px, 10vw, 160px);
+  aspect-ratio: 4/5;
+}
+
+/* Position 3: Top-right */
+.pos3 {
+  top: 4%;
+  right: 2%;
+  width: clamp(100px, 10vw, 160px);
+  aspect-ratio: 3/4;
+}
+
+/* Position 4: Center — overlapping "IMPOSSIBLE" text, IN FRONT */
+.pos4 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  width: clamp(150px, 15vw, 240px);
+  aspect-ratio: 3/4;
+  z-index: 5;
+  border-radius: 12px;
+}
+
+/* Position 5: Right center */
+.pos5 {
+  top: 32%;
+  right: 5%;
+  width: clamp(110px, 11vw, 180px);
+  aspect-ratio: 4/5;
+  z-index: 5;
+}
+
+/* Position 6: Bottom-right */
+.pos6 {
+  bottom: 8%;
+  right: 4%;
+  width: clamp(130px, 13vw, 210px);
+  aspect-ratio: 3/4;
+}
+
+/* Position 7: Bottom-left — mirrors pos6 */
+.pos7 {
+  bottom: 8%;
+  left: 4%;
+  width: clamp(120px, 12vw, 200px);
+  aspect-ratio: 3/4;
+}
+
+/* ── Sparkle decorations ── */
+.sparkle1 {
+  position: absolute;
+  top: 18%;
+  right: 18%;
+  font-size: 1.6rem;
+  color: #F4487A;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.sparkle2 {
+  position: absolute;
+  bottom: 22%;
+  left: 20%;
+  font-size: 2.4rem;
+  color: rgba(200,120,80,0.35);
+  z-index: 6;
+  pointer-events: none;
+  font-family: 'Playfair Display', serif;
+}
+
+/* ── Main typography ── */
+.textBlock {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  padding: 8rem 2rem 6rem;
+}
+
+.mainHeading {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-size: clamp(3.2rem, 9vw, 11rem);
+  margin: 0;
+  background: linear-gradient(135deg, #1c1c1e 0%, #3a3a3c 50%, #1c1c1e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.line1, .line2, .line4 {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  color: #1c1c1e;
+  font-weight: 900;
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-size: clamp(3rem, 8.5vw, 10rem);
+}
+
+.line3 {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-weight: 900;
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  font-size: clamp(4rem, 12vw, 15rem);
+  background: linear-gradient(135deg, #D93060 0%, #F4487A 35%, #B01040 70%, #D93060 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 0.05em 0;
+}
+
+/* ── CTA Button ── */
+.ctaButton {
+  display: inline-block;
+  margin-top: 4.5rem;
+  padding: 1em 2.8em;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #F4487A 0%, #D93060 100%);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 10px 32px rgba(244, 72, 122, 0.4);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 14px 40px rgba(244, 72, 122, 0.5);
+}
+
+.ctaButton:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 6px 18px rgba(244, 72, 122, 0.3);
+}
+
+/* ── Scroll cue ── */
+.scrollCue {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  height: 48px;
+  overflow: hidden;
+}
+
+.scrollLine {
+  display: block;
+  width: 1.5px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(28,28,30,0.35), transparent);
+  transform-origin: top;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .sideLabel { display: none; }
+  .pos2 { display: none; }
+  .pos6 { display: none; }
+  .pos1 { width: 90px; }
+  .pos3 { width: 80px; }
+  .pos4 { width: 120px; }
+  .pos5 { width: 85px; }
+  .sparkle1 { display: none; }
+  .sparkle2 { display: none; }
+}
+
+/* ══════════════════════════════════
+   DARK MODE
+══════════════════════════════════ */
+:global([data-theme="dark"]) .hero {
+  background: #0A0A0A;
+}
+
+:global([data-theme="dark"]) .hero::before {
+  background: radial-gradient(circle at 45% 45%,
+    rgba(244,72,122,0.08) 0%,
+    transparent 70%
+  );
+}
+
+:global([data-theme="dark"]) .hero::after {
+  background: radial-gradient(circle at 55% 55%,
+    rgba(200,169,110,0.05) 0%,
+    transparent 70%
+  );
+}
+
+:global([data-theme="dark"]) .sideLabel {
+  color: rgba(255,255,255,0.3);
+}
+
+:global([data-theme="dark"]) .card {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+:global([data-theme="dark"]) .sparkle2 {
+  color: rgba(200,169,110,0.5);
+}
+
+:global([data-theme="dark"]) .line1,
+:global([data-theme="dark"]) .line2,
+:global([data-theme="dark"]) .line4 {
+  color: #ffffff;
+}
+
+:global([data-theme="dark"]) .line3 {
+  background: linear-gradient(135deg, #C8A96E 0%, #E8D5A6 35%, #B89850 70%, #C8A96E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:global([data-theme="dark"]) .scrollLine {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+}

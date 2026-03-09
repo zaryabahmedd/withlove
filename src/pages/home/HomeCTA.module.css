@@ -1,0 +1,200 @@
+/* ═══ EDITORIAL CTA ═══ */
+.section {
+  position: relative;
+  padding: 8rem 2rem;
+  background: #FDF6F8;
+  overflow: hidden;
+  text-align: center;
+}
+
+.glow1 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244,72,122,0.12) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  pointer-events: none;
+}
+
+.glow2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,160,100,0.09) 0%, transparent 70%);
+  bottom: -80px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.eyebrow {
+  font-size: 0.85rem;
+  color: #F4487A;
+  font-weight: 700;
+}
+
+.heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 900;
+  color: #1c1c1e;
+  line-height: 1.15;
+}
+
+.headingGold {
+  background: linear-gradient(135deg, #D93060, #F4487A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sub {
+  font-size: 1.05rem;
+  color: rgba(28,28,30,0.48);
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+/* ── Buttons ── */
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.primaryBtn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.95rem 2rem;
+  background: linear-gradient(135deg, #F4487A, #D63060);
+  color: #fff;
+  border: none;
+  border-radius: 60px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+.btnShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+  animation: shimmerSlide 3s infinite;
+}
+
+@keyframes shimmerSlide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.btnArrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  margin-left: 0.2rem;
+}
+
+.primaryBtn:hover .btnArrow {
+  transform: translateX(4px);
+}
+
+.ghostBtn {
+  padding: 0.95rem 2rem;
+  background: transparent;
+  color: rgba(28,28,30,0.55);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 60px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.ghostBtn:hover {
+  color: #1c1c1e;
+}
+
+.trust {
+  font-size: 0.82rem;
+  color: rgba(28,28,30,0.35);
+  margin-top: 0.5rem;
+}
+
+.trust strong {
+  color: rgba(28,28,30,0.55);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .primaryBtn,
+  .ghostBtn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* ══════════════════════════════════
+   DARK MODE
+══════════════════════════════════ */
+:global([data-theme="dark"]) .section {
+  background: #0A0A0A;
+}
+
+:global([data-theme="dark"]) .glow2 {
+  background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+}
+
+:global([data-theme="dark"]) .heading {
+  color: #fff;
+}
+
+:global([data-theme="dark"]) .headingGold {
+  background: linear-gradient(135deg, #C8A96E, #E8D5A6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:global([data-theme="dark"]) .sub {
+  color: rgba(255,255,255,0.45);
+}
+
+:global([data-theme="dark"]) .ghostBtn {
+  color: rgba(255,255,255,0.65);
+  border-color: rgba(255,255,255,0.15);
+}
+
+:global([data-theme="dark"]) .ghostBtn:hover {
+  color: #fff;
+}
+
+:global([data-theme="dark"]) .trust {
+  color: rgba(255,255,255,0.3);
+}
+
+:global([data-theme="dark"]) .trust strong {
+  color: rgba(255,255,255,0.5);
+}

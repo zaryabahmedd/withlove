@@ -1,0 +1,415 @@
+/* ── Scroll progress bar ── */
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, #F4487A 0%, #FF8CB0 50%, #FFD166 100%);
+  transform-origin: 0%;
+  z-index: 200;
+  pointer-events: none;
+}
+
+/* ── Nav ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 2.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition:
+    backdrop-filter 0.45s ease,
+    background 0.45s ease,
+    box-shadow 0.45s ease,
+    padding 0.35s ease;
+}
+
+/* Gradient glow line at bottom — fades in on scroll */
+.borderGlow {
+  position: absolute;
+  bottom: 0;
+  left: 4%;
+  right: 4%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(244, 72, 122, 0.45) 25%,
+    rgba(255, 140, 176, 0.7) 50%,
+    rgba(244, 72, 122, 0.45) 75%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.scrolled {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 6px 40px rgba(0, 0, 0, 0.07),
+    0 1px 6px rgba(0, 0, 0, 0.04);
+  padding: 0.55rem 2.5rem;
+}
+
+.scrolled .borderGlow {
+  opacity: 1;
+}
+
+/* ── Center links — absolutely centered ── */
+.linksWrap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: #2d2d2d;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  letter-spacing: -0.01em;
+  transition: background 0.18s, color 0.18s;
+}
+
+.link:hover {
+  background: rgba(244, 72, 122, 0.08);
+  color: #D42860;
+}
+
+.linkIcon {
+  font-size: 0.82rem;
+  opacity: 0.65;
+}
+
+/* Sliding underline indicator */
+.linkDot {
+  position: absolute;
+  bottom: 5px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: linear-gradient(90deg, #F4487A, #FF8CB0);
+  border-radius: 2px;
+  transform-origin: left center;
+  display: block;
+}
+
+/* ── Right actions ── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Language button */
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+  background: transparent;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  padding: 0.33rem 0.8rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.langBtn:hover {
+  background: rgba(244, 72, 122, 0.07);
+  border-color: rgba(244, 72, 122, 0.3);
+  color: #D42860;
+}
+
+/* Theme toggle */
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  overflow: hidden;
+}
+
+.themeToggle:hover {
+  border-color: rgba(244, 72, 122, 0.5);
+  background: rgba(244, 72, 122, 0.09);
+  box-shadow: 0 0 16px rgba(244, 72, 122, 0.22);
+}
+
+/* CTA button */
+.cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #F4487A 0%, #E03070 55%, #CC2060 100%);
+  color: white;
+  border: none;
+  padding: 0.58rem 1.35rem;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 4px 20px rgba(244, 72, 122, 0.42),
+    0 1px 4px rgba(244, 72, 122, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+  white-space: nowrap;
+}
+
+.cta:hover {
+  box-shadow:
+    0 6px 28px rgba(244, 72, 122, 0.56),
+    0 2px 8px rgba(244, 72, 122, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Moving shimmer sweep inside CTA */
+.ctaShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 65%
+  );
+  background-size: 250% 100%;
+  animation: ctaShimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ctaShimmer {
+  0%   { background-position: 220% 0; }
+  100% { background-position: -220% 0; }
+}
+
+.ctaIcon {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.ctaArrow {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+/* ── Mobile hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.hamburger:hover {
+  background: rgba(244, 72, 122, 0.07);
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #3a3a3a;
+  border-radius: 2px;
+  transform-origin: center;
+}
+
+/* ── Mobile menu ── */
+.mobileMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(244, 72, 122, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.mobileInner {
+  padding: 1.1rem 1.5rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileLink {
+  padding: 0.82rem 0;
+  color: #2d2d2d;
+  text-decoration: none;
+  font-size: 0.98rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+
+.mobileLink:hover { color: #F4487A; }
+
+.mobileLinkIcon {
+  opacity: 0.65;
+  font-size: 0.9rem;
+}
+
+.ctaMobile {
+  margin-top: 1.2rem;
+  background: linear-gradient(135deg, #F4487A, #E03870);
+  color: white;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 20px rgba(244, 72, 122, 0.4);
+  transition: box-shadow 0.25s;
+}
+
+.ctaMobile:hover {
+  box-shadow: 0 6px 28px rgba(244, 72, 122, 0.55);
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 0.75rem 1.25rem; }
+  .linksWrap, .cta, .langBtn { display: none; }
+  .hamburger { display: flex; }
+  .themeToggle { width: 34px; height: 34px; }
+}
+
+/* ══ DARK MODE ══ */
+:global([data-theme="dark"]) .nav {
+  background: rgba(14, 8, 13, 0.72);
+}
+
+:global([data-theme="dark"]) .scrolled {
+  background: rgba(12, 6, 11, 0.93);
+  box-shadow:
+    0 6px 40px rgba(0, 0, 0, 0.55),
+    0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .borderGlow {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(244, 72, 122, 0.6) 25%,
+    rgba(255, 140, 176, 0.85) 50%,
+    rgba(244, 72, 122, 0.6) 75%,
+    transparent 100%
+  );
+}
+
+:global([data-theme="dark"]) .link {
+  color: #C8A0B8;
+}
+
+:global([data-theme="dark"]) .link:hover {
+  background: rgba(244, 72, 122, 0.12);
+  color: #FF8CB0;
+}
+
+:global([data-theme="dark"]) .langBtn {
+  color: #9070A0;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global([data-theme="dark"]) .langBtn:hover {
+  background: rgba(244, 72, 122, 0.1);
+  border-color: rgba(244, 72, 122, 0.3);
+  color: #FF8CB0;
+}
+
+:global([data-theme="dark"]) .themeToggle {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+:global([data-theme="dark"]) .themeToggle:hover {
+  border-color: rgba(244, 72, 122, 0.5);
+  background: rgba(244, 72, 122, 0.12);
+}
+
+:global([data-theme="dark"]) .hamburger span {
+  background: #C8A0B8;
+}
+
+:global([data-theme="dark"]) .mobileMenu {
+  background: rgba(14, 8, 13, 0.98);
+  border-bottom-color: rgba(244, 72, 122, 0.18);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
+}
+
+:global([data-theme="dark"]) .mobileLink {
+  color: #C8A0B8;
+  border-bottom-color: rgba(244, 72, 122, 0.1);
+}
+
+:global([data-theme="dark"]) .mobileLink:hover {
+  color: #FF8CB0;
+}
+
+:global([data-theme="dark"]) .progressBar {
+  background: linear-gradient(90deg, #F4487A, #C9B8FF, #FFD166);
+}
+
+:global([data-theme="dark"]) .ctaMobile {
+  background: linear-gradient(135deg, #F4487A, #D42868);
+}

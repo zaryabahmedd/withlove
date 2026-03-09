@@ -1,0 +1,167 @@
+/* ═══ CARD SHOWCASE MARQUEE ═══ */
+.section {
+  position: relative;
+  padding: 0;
+  background: #FDF6F8;
+  overflow: hidden;
+}
+
+/* Top & bottom gradient veils — cards sink into the background */
+.section::before,
+.section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200px;
+  pointer-events: none;
+  z-index: 4;
+}
+.section::before {
+  top: 0;
+  background: linear-gradient(to bottom, #FDF6F8 0%, transparent 100%);
+}
+.section::after {
+  bottom: 0;
+  background: linear-gradient(to top, #FDF6F8 0%, transparent 100%);
+}
+
+/* ── Floating header — foreground over cards ── */
+.header {
+  position: relative;
+  z-index: 6;
+  text-align: center;
+  padding: 6rem 2rem 3rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #F4487A;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  color: #1c1c1e;
+  line-height: 1.15;
+}
+
+.accent {
+  background: linear-gradient(135deg, #F4487A, #FF8CB0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Marquee band ── */
+.marquees {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding-bottom: 6rem;
+}
+
+/* Central tint overlay to push cards into background */
+.marquees::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(253, 246, 248, 0.15);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.marqueeTrack {
+  overflow: hidden;
+  width: 100%;
+  /* Left/right edge fade masks */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,0.5) 6%,
+    black 14%,
+    black 86%,
+    rgba(0,0,0,0.5) 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,0.5) 6%,
+    black 14%,
+    black 86%,
+    rgba(0,0,0,0.5) 94%,
+    transparent 100%
+  );
+}
+
+.marqueeInner {
+  display: flex;
+  gap: 1.4rem;
+  width: max-content;
+}
+
+/* Portrait rectangle — actual greeting/occasion card proportions */
+.marqueeCard {
+  flex-shrink: 0;
+  width: clamp(120px, 12vw, 190px);
+  aspect-ratio: 3/4;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  opacity: 0.88;
+  filter: saturate(0.85) brightness(0.98);
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.marqueeCard:hover {
+  opacity: 1;
+  filter: saturate(1) brightness(1);
+  transform: scale(1.07) translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+  z-index: 5;
+}
+
+.marqueeCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ══════════════════════════════════
+   DARK MODE
+══════════════════════════════════ */
+:global([data-theme="dark"]) .section {
+  background: #0A0A0A;
+}
+:global([data-theme="dark"]) .section::before {
+  background: linear-gradient(to bottom, #0A0A0A 0%, transparent 100%);
+}
+:global([data-theme="dark"]) .section::after {
+  background: linear-gradient(to top, #0A0A0A 0%, transparent 100%);
+}
+:global([data-theme="dark"]) .marquees::before {
+  background: rgba(10, 10, 10, 0.35);
+}
+:global([data-theme="dark"]) .heading {
+  color: #fff;
+}
+:global([data-theme="dark"]) .marqueeCard {
+  opacity: 0.78;
+  filter: saturate(0.8) brightness(0.9);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+:global([data-theme="dark"]) .marqueeCard:hover {
+  opacity: 1;
+  filter: saturate(1) brightness(1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}

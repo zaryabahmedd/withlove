@@ -1,0 +1,50 @@
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem 0;
+  background: rgba(124,58,237,0.06);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.fade {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  background: linear-gradient(to right, #050510, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.fadeRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  background: linear-gradient(to left, #050510, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.track {
+  display: flex;
+  gap: 2rem;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.item {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+.dot {
+  color: #7c3aed;
+  font-size: 1rem;
+}

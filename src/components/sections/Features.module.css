@@ -1,0 +1,594 @@
+/* ══════════════════════════════════════════
+   Features Section — "With Love" brand
+   ══════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  padding: 0 2rem;
+  background: linear-gradient(180deg, #FFF8FA 0%, #FFF0F3 30%, #F9F0FF 60%, #EEFCF8 100%);
+  overflow: hidden;
+}
+
+/* ── Floating particles ── */
+.particleField {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.35;
+  filter: blur(1px);
+}
+
+/* ── Decorative curves ── */
+.topCurve,
+.bottomCurve {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  line-height: 0;
+}
+
+.topCurve {
+  top: -1px;
+}
+
+.bottomCurve {
+  bottom: -1px;
+}
+
+.topCurve svg,
+.bottomCurve svg {
+  width: 100%;
+  height: 80px;
+  display: block;
+}
+
+/* ── Section Header ── */
+.header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 6rem;
+  padding-bottom: 3.5rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Plus Jakarta Sans', 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #F4487A;
+  margin-bottom: 1rem;
+  background: rgba(244, 72, 122, 0.08);
+  padding: 6px 18px;
+  border-radius: 100px;
+}
+
+.eyebrowDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #F4487A;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+
+.heading {
+  font-family: 'Plus Jakarta Sans', 'Nunito', sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #1c1c1e;
+  margin-bottom: 1rem;
+}
+
+.headingAccent {
+  position: relative;
+  color: #F4487A;
+  display: inline-block;
+}
+
+.headingAccent::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: -4px;
+  right: -4px;
+  height: 10px;
+  background: rgba(244, 72, 122, 0.15);
+  border-radius: 4px;
+  z-index: -1;
+  transform: skewX(-6deg);
+}
+
+.subtext {
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  color: #6b7280;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+/* ── Feature Cards Container ── */
+.features {
+  position: relative;
+  z-index: 2;
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+/* ── Single Feature Card ── */
+.featureCard {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 4px 30px rgba(244, 72, 122, 0.06),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.4s;
+}
+
+.featureCard:hover {
+  border-color: rgba(244, 72, 122, 0.2);
+}
+
+/* Text side */
+.featureText {
+  flex: 1;
+  min-width: 0;
+}
+
+.featureIconCircle {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.featureTitle {
+  font-family: 'Plus Jakarta Sans', 'Nunito', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1c1c1e;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+.featureDesc {
+  font-size: 0.98rem;
+  color: #6b7280;
+  line-height: 1.7;
+  font-weight: 500;
+  max-width: 380px;
+}
+
+.accentLine {
+  width: 42px;
+  height: 3px;
+  border-radius: 3px;
+  margin-top: 1.2rem;
+  transform-origin: left;
+}
+
+/* Mockup side */
+.featureMockup {
+  position: relative;
+  flex: 0 0 340px;
+  height: 240px;
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.featureShimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 65%
+  );
+  background-size: 250% 100%;
+  animation: featureShimmer 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes featureShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Mock: Build Card ── */
+.mockBuild {
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.mockToolbar {
+  display: flex;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #f8f8f8;
+  border-bottom: 1px solid #eee;
+}
+
+.mockDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.mockCanvas {
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mockThemeRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.mockSwatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mockTextLine {
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e7eb;
+}
+
+.mockCursor {
+  width: 2px;
+  height: 18px;
+  background: #F4487A;
+  border-radius: 1px;
+  margin-top: 2px;
+}
+
+/* ── Mock: Share ── */
+.mockShare {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.mockLink {
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  max-width: 280px;
+  width: 100%;
+}
+
+.mockLinkIcon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.mockLinkText {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  color: #6C63FF;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mockShareRow {
+  display: flex;
+  gap: 12px;
+}
+
+.mockShareBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Mock: Collaborative ── */
+.mockCollab {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mockSig {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.mockAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.mockSigText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.mockSigName {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1c1c1e;
+}
+
+.mockSigMsg {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* ── Stats Bar ── */
+.statsBar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  max-width: 800px;
+  margin: 4rem auto 5rem;
+  padding: 1.5rem 2.5rem;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 22px;
+  box-shadow:
+    0 8px 32px rgba(244, 72, 122, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.statItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.statItem + .statItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.statValue {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #F4487A;
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .section {
+    padding: 0 1.25rem;
+  }
+
+  .header {
+    padding-top: 4rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .featureCard {
+    flex-direction: column !important;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 22px;
+  }
+
+  .featureMockup {
+    flex: none;
+    width: 100%;
+    height: 200px;
+  }
+
+  .statsBar {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    border-radius: 18px;
+  }
+
+  .statItem + .statItem::before {
+    display: none;
+  }
+
+  .statItem {
+    flex: 0 0 48%;
+    padding: 0.5rem 0;
+  }
+
+  .topCurve svg,
+  .bottomCurve svg {
+    height: 40px;
+  }
+}
+
+/* ══ DARK MODE ══ */
+:global([data-theme="dark"]) .section {
+  background: linear-gradient(180deg, #0E080D 0%, #130B11 30%, #110914 60%, #0C0A12 100%);
+}
+
+:global([data-theme="dark"]) .topCurve path {
+  fill: #0E080D;
+}
+
+:global([data-theme="dark"]) .bottomCurve path {
+  fill: #0E080D;
+}
+
+:global([data-theme="dark"]) .heading {
+  color: #F5E8EE;
+}
+
+:global([data-theme="dark"]) .subtext {
+  color: #A87888;
+}
+
+:global([data-theme="dark"]) .featureCard {
+  background: rgba(28, 12, 22, 0.85);
+  border-color: rgba(244, 72, 122, 0.2);
+  box-shadow:
+    0 4px 30px rgba(244, 72, 122, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+:global([data-theme="dark"]) .featureCard:hover {
+  border-color: rgba(244, 72, 122, 0.42);
+}
+
+:global([data-theme="dark"]) .featureTitle {
+  color: #F5E8EE;
+}
+
+:global([data-theme="dark"]) .featureDesc {
+  color: #A87888;
+}
+
+:global([data-theme="dark"]) .mockBuild {
+  background: #1C0E18;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+:global([data-theme="dark"]) .mockToolbar {
+  background: #15090F;
+  border-bottom-color: rgba(244, 72, 122, 0.15);
+}
+
+:global([data-theme="dark"]) .mockCanvas {
+  background: #1C0E18;
+}
+
+:global([data-theme="dark"]) .mockTextLine {
+  background: #3A1828;
+}
+
+:global([data-theme="dark"]) .mockLink {
+  background: #1C0E18;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+:global([data-theme="dark"]) .mockLinkText {
+  color: #B89AFF;
+}
+
+:global([data-theme="dark"]) .mockSig {
+  background: rgba(28, 12, 22, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+:global([data-theme="dark"]) .mockSigName {
+  color: #F5E8EE;
+}
+
+:global([data-theme="dark"]) .mockSigMsg {
+  color: #A87888;
+}
+
+:global([data-theme="dark"]) .statsBar {
+  background: rgba(28, 12, 22, 0.85);
+  border-color: rgba(244, 72, 122, 0.22);
+  box-shadow:
+    0 8px 32px rgba(244, 72, 122, 0.07),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+:global([data-theme="dark"]) .statLabel {
+  color: #7A5870;
+}
+
+:global([data-theme="dark"]) .statItem + .statItem::before {
+  background: rgba(244, 72, 122, 0.18);
+}
