@@ -6,6 +6,7 @@ import styles from './Navbar.module.css'
 
 const navLinks = [
   { label: 'My Cards', icon: '♡', href: '#' },
+  { label: 'Sample 2', icon: null, to: '/home' },
   { label: 'Features', icon: null, href: '#features' },
   { label: 'Pricing', icon: null, href: '#' },
 ]
@@ -43,30 +44,47 @@ export default function Navbar({ isDark, toggleTheme }) {
         {/* Center: Nav links — absolutely centered */}
         <nav className={styles.linksWrap}>
           <ul className={styles.links}>
-            {navLinks.map(({ label, icon, href }, i) => (
+            {navLinks.map(({ label, icon, href, to }, i) => (
               <motion.li
                 key={label}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
               >
-                <motion.a
-                  href={href}
-                  className={styles.link}
-                  whileHover="hovered"
-                  initial="idle"
-                >
-                  {icon && <span className={styles.linkIcon}>{icon}</span>}
-                  <span>{label}</span>
-                  <motion.span
-                    className={styles.linkDot}
-                    variants={{
-                      idle:    { scaleX: 0, opacity: 0 },
-                      hovered: { scaleX: 1, opacity: 1 },
-                    }}
-                    transition={{ duration: 0.18 }}
-                  />
-                </motion.a>
+                {to ? (
+                  <motion.div whileHover="hovered" initial="idle">
+                    <Link to={to} className={styles.link}>
+                      {icon && <span className={styles.linkIcon}>{icon}</span>}
+                      <span>{label}</span>
+                      <motion.span
+                        className={styles.linkDot}
+                        variants={{
+                          idle: { scaleX: 0, opacity: 0 },
+                          hovered: { scaleX: 1, opacity: 1 },
+                        }}
+                        transition={{ duration: 0.18 }}
+                      />
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.a
+                    href={href}
+                    className={styles.link}
+                    whileHover="hovered"
+                    initial="idle"
+                  >
+                    {icon && <span className={styles.linkIcon}>{icon}</span>}
+                    <span>{label}</span>
+                    <motion.span
+                      className={styles.linkDot}
+                      variants={{
+                        idle: { scaleX: 0, opacity: 0 },
+                        hovered: { scaleX: 1, opacity: 1 },
+                      }}
+                      transition={{ duration: 0.18 }}
+                    />
+                  </motion.a>
+                )}
               </motion.li>
             ))}
           </ul>
@@ -150,19 +168,37 @@ export default function Navbar({ isDark, toggleTheme }) {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className={styles.mobileInner}>
-                {navLinks.map(({ label, icon }, i) => (
-                  <motion.a
-                    key={label}
-                    href="#"
-                    className={styles.mobileLink}
-                    onClick={() => setMenuOpen(false)}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.07 }}
-                  >
-                    {icon && <span className={styles.mobileLinkIcon}>{icon}</span>}
-                    {label}
-                  </motion.a>
+                {navLinks.map(({ label, icon, href, to }, i) => (
+                  to ? (
+                    <motion.div
+                      key={label}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.07 }}
+                    >
+                      <Link
+                        to={to}
+                        className={styles.mobileLink}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {icon && <span className={styles.mobileLinkIcon}>{icon}</span>}
+                        {label}
+                      </Link>
+                    </motion.div>
+                  ) : (
+                    <motion.a
+                      key={label}
+                      href={href}
+                      className={styles.mobileLink}
+                      onClick={() => setMenuOpen(false)}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.07 }}
+                    >
+                      {icon && <span className={styles.mobileLinkIcon}>{icon}</span>}
+                      {label}
+                    </motion.a>
+                  )
                 ))}
                 <motion.a
                   href="#"
