@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import styles from './Logo.module.css'
 
 const logoSrc = '/With_Love_transparent_1767397236984-CNLkaJTe.png'
+const MotionLink = motion(Link)
 
 // Navbar variant — small, subtle entrance + hover wiggle
 export function NavLogo() {
   return (
-    <motion.a
-      href="#home"
+    <MotionLink
+      to="/home"
       className={styles.navLogoWrap}
       initial={{ opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
@@ -26,7 +28,7 @@ export function NavLogo() {
           },
         }}
       />
-    </motion.a>
+    </MotionLink>
   )
 }
 
