@@ -991,6 +991,23 @@ export default function CardEditor() {
               </AnimatePresence>
             </div>
 
+            {/* Mobile inline preview */}
+            <div className={styles.mobileInlinePreview}>
+              <div className={styles.mobileInlinePreviewLabel}>Live Preview</div>
+              <CardPreview
+                template={selectedTemplate}
+                recipientName={recipientName}
+                senderName={senderName}
+                message={message}
+                occasion={occasion}
+                media={uploadedMedia}
+                customColor={customColor}
+              />
+              <div className={styles.mobileInlinePreviewCaption}>
+                {selectedTemplate.name} · {selectedTemplate.description}
+              </div>
+            </div>
+
             {/* Mobile preview toggle */}
             <button onClick={() => setShowMobilePreview(true)} className={styles.mobilePreviewBtn}>
               <Eye />

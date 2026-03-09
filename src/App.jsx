@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import { useSmoothScroll } from './hooks/useSmoothScroll'
 import Navbar from './components/ui/Navbar'
 import Hero from './components/sections/Hero'
 import Features from './components/sections/Features'
@@ -29,7 +28,6 @@ function LandingPage() {
 export default function App() {
   const [ready, setReady] = useState(false)
   const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark')
-  useSmoothScroll()
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light')

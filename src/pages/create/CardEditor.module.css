@@ -669,7 +669,37 @@ textarea.textInput {
 }
 .mobilePreviewBtn svg { width: 16px; height: 16px; }
 
+/* ── Mobile inline preview ── */
+.mobileInlinePreview {
+  margin: 0.5rem 0 1.25rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(120, 53, 15, 0.08);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.mobileInlinePreviewLabel {
+  margin-bottom: 0.75rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(120, 53, 15, 0.35);
+  text-align: center;
+}
+
+.mobileInlinePreviewCaption {
+  margin-top: 0.875rem;
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(120, 53, 15, 0.35);
+}
+
 @media (min-width: 1024px) {
+  .mobileInlinePreview { display: none; }
   .mobilePreviewBtn { display: none; }
 }
 
