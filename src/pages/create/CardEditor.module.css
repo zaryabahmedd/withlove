@@ -1273,3 +1273,14 @@ textarea.textInput {
   color: rgba(255, 255, 255, 0.78);
 }
 :global([data-theme="dark"]) .shareHomeLink:hover { background: rgba(255, 255, 255, 0.12); }
+
+/* Spin animation for loading icon */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sendBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

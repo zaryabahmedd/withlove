@@ -1,6 +1,7 @@
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { cardOccasions, cardTemplates } from '../create/card-templates'
-import { getCardDataFromRoute, purgeExpiredStoredCards } from '../../utils/cardShare'
+import { getCardData } from '../../utils/cardShare'
 import styles from './CardSharePage.module.css'
 
 function formatDate(ts) {
@@ -11,14 +12,66 @@ function formatDate(ts) {
   })
 }
 
+function MediaDisplay({ media, accent }) {
+  if (!media || media.length === 0) return null
+
+  return (
+    <div className={styles.mediaSection}>
+      {media.map((item, i) => (
+        <div key={`${item.type}-${i}`} className={styles.mediaItem}>
+          {item.type === 'image' && (
+            <img
+              src={item.url}
+              alt="Card media"
+              className={styles.mediaImage}
+              style={{ borderColor: `${accent}30` }}
+            />
+          )}
+          {item.type === 'video' && (
+            <video
+              src={item.url}
+              controls
+              className={styles.mediaVideo}
+              style={{ borderColor: `${accent}30` }}
+            />
+          )}
+          {item.type === 'audio' && (
+            <div className={styles.audioWrapper} style={{ background: `${accent}15`, borderColor: `${accent}30` }}>
+              <audio src={item.url} controls className={styles.mediaAudio} />
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function CardSharePage() {
   const { id } = useParams()
-  const [searchParams] = useSearchParams()
+  const [status, setStatus] = useState('loading')
+  const [payload, setPayload] = useState(null)
 
-  purgeExpiredStoredCards()
-  const result = getCardDataFromRoute(id, searchParams)
+  useEffect(() => {
+    async function fetchCard() {
+      const result = await getCardData(id)
+      setStatus(result.status)
+      setPayload(result.payload)
+    }
+    fetchCard()
+  }, [id])
 
-  if (result.status === 'missing') {
+  if (status === 'loading') {
+    return (
+      <main className={styles.page}>
+        <div className={styles.stateCard}>
+          <div className={styles.loader} />
+          <p>Loading your card...</p>
+        </div>
+      </main>
+    )
+  }
+
+  if (status === 'missing') {
     return (
       <main className={styles.page}>
         <div className={styles.stateCard}>
@@ -33,7 +86,7 @@ export default function CardSharePage() {
     )
   }
 
-  if (result.status === 'expired') {
+  if (status === 'expired') {
     return (
       <main className={styles.page}>
         <div className={styles.stateCard}>
@@ -48,7 +101,6 @@ export default function CardSharePage() {
     )
   }
 
-  const { payload } = result
   const template = cardTemplates.find((t) => t.id === payload.templateId) || cardTemplates[0]
   const occasion = cardOccasions.find((o) => o.value === payload.occasionValue) || cardOccasions[0]
   const colors = payload.customColor || {
@@ -77,6 +129,8 @@ export default function CardSharePage() {
           </div>
 
           <h1 className={styles.to}>To {payload.recipientName || 'You'}</h1>
+
+          <MediaDisplay media={payload.media} accent={colors.accent} />
 
           <p className={styles.message}>
             {payload.message || 'A heartfelt message was shared with you.'}

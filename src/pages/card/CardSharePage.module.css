@@ -149,3 +149,68 @@
   border-color: rgba(255, 255, 255, 0.2);
   color: rgba(255, 255, 255, 0.85);
 }
+
+/* Loading spinner */
+.loader {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 1rem;
+  border: 3px solid rgba(245, 64, 87, 0.2);
+  border-top-color: #f54057;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Media display */
+.mediaSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.mediaItem {
+  display: flex;
+  justify-content: center;
+}
+
+.mediaImage {
+  max-width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.mediaVideo {
+  max-width: 100%;
+  max-height: 280px;
+  border-radius: 12px;
+  border: 2px solid;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.audioWrapper {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mediaAudio {
+  width: 100%;
+  max-width: 320px;
+}
+
+:global([data-theme='dark']) .mediaImage,
+:global([data-theme='dark']) .mediaVideo {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ImageIcon, Video, Camera, Mic, ChevronDown, ChevronUp,
   Send, Copy, Check, X, ArrowLeft, Users, Sparkles,
-  Eye, Heart, Square, Palette,
+  Eye, Heart, Square, Palette, Loader2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cardTemplates, cardOccasions, colorPresets } from "./card-templates";
@@ -11,8 +11,9 @@ import {
   buildShareLink,
   generateCardId,
   makeSharePayload,
-  purgeExpiredStoredCards,
   saveSharedCard,
+  uploadMedia,
+  blobUrlToFile,
 } from "../../utils/cardShare";
 import styles from "./CardEditor.module.css";
 
@@ -570,6 +571,7 @@ export default function CardEditor() {
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareLink, setShareLink] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const fileInputRef = useRef(null);
   const videoInputRef = useRef(null);
@@ -587,23 +589,56 @@ export default function CardEditor() {
     }
   }, []);
 
-  const handleSend = () => {
-    purgeExpiredStoredCards();
-    const id = generateCardId();
-    const payload = makeSharePayload({
-      cardId: id,
-      recipientName,
-      senderName,
-      message,
-      occasionValue: occasion.value,
-      templateId: selectedTemplate.id,
-      customColor,
-      media: uploadedMedia.filter((item) => !String(item.url || '').startsWith('blob:')),
-    });
-    saveSharedCard(id, payload);
-    const link = buildShareLink(id, payload);
-    setShareLink(link);
-    setShowShareModal(true);
+  const handleSend = async () => {
+    setIsUploading(true);
+    try {
+      const id = generateCardId();
+
+      // Upload all media files to Supabase storage
+      const uploadedUrls = [];
+      for (const item of uploadedMedia) {
+        let publicUrl = null;
+
+        if (item.url?.startsWith('blob:')) {
+          // Convert blob URL to file and upload
+          const file = await blobUrlToFile(item.url, item.name || `media.${item.type === 'image' ? 'jpg' : item.type === 'video' ? 'webm' : 'webm'}`);
+          if (file) {
+            publicUrl = await uploadMedia(file, id);
+          }
+        } else if (item.url) {
+          // Already a public URL
+          publicUrl = item.url;
+        }
+
+        if (publicUrl) {
+          uploadedUrls.push({ type: item.type, url: publicUrl, name: item.name });
+        }
+      }
+
+      const payload = makeSharePayload({
+        cardId: id,
+        recipientName,
+        senderName,
+        message,
+        occasionValue: occasion.value,
+        templateId: selectedTemplate.id,
+        customColor,
+        media: uploadedUrls,
+      });
+
+      const success = await saveSharedCard(id, payload);
+      if (!success) {
+        console.error('Failed to save card to database');
+      }
+
+      const link = buildShareLink(id);
+      setShareLink(link);
+      setShowShareModal(true);
+    } catch (err) {
+      console.error('Error creating card:', err);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleCopyLink = async () => {
@@ -1034,10 +1069,19 @@ export default function CardEditor() {
             </button>
 
             {/* Send button */}
-            <button onClick={handleSend} className={styles.sendBtn}>
-              <Heart style={{ fill: 'rgba(255,255,255,0.3)' }} />
-              <span>Send with love</span>
-              <motion.span style={{ marginLeft: 4 }} animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
+            <button onClick={handleSend} disabled={isUploading} className={styles.sendBtn}>
+              {isUploading ? (
+                <>
+                  <Loader2 style={{ animation: 'spin 1s linear infinite' }} />
+                  <span>Creating card...</span>
+                </>
+              ) : (
+                <>
+                  <Heart style={{ fill: 'rgba(255,255,255,0.3)' }} />
+                  <span>Send with love</span>
+                  <motion.span style={{ marginLeft: 4 }} animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
+                </>
+              )}
             </button>
           </div>
         </div>

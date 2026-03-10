@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'cardhazza_shared_cards_v1'
+import { supabase, STORAGE_BUCKET } from './supabase'
 
 export const CARD_TTL_MS = 30 * 24 * 60 * 60 * 1000
 
@@ -6,23 +6,121 @@ export function generateCardId() {
   return Math.random().toString(36).substring(2, 10)
 }
 
-function base64EncodeUtf8(value) {
-  return btoa(unescape(encodeURIComponent(value)))
+export function buildShareLink(cardId) {
+  return `${window.location.origin}/card/${cardId}`
 }
 
-function base64DecodeUtf8(value) {
-  return decodeURIComponent(escape(atob(value)))
-}
+/**
+ * Upload a media file to Supabase Storage
+ * @param {File|Blob} file - The file to upload
+ * @param {string} cardId - The card ID to associate the file with
+ * @returns {Promise<string|null>} - Public URL or null if failed
+ */
+export async function uploadMedia(file, cardId) {
+  const ext = file.name?.split('.').pop() || (file.type?.split('/')[1] || 'bin')
+  const filename = `${cardId}/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`
 
-export function encodeSharePayload(payload) {
-  return base64EncodeUtf8(JSON.stringify(payload))
-}
+  const { data, error } = await supabase.storage
+    .from(STORAGE_BUCKET)
+    .upload(filename, file, {
+      cacheControl: '3600',
+      upsert: false,
+    })
 
-export function decodeSharePayload(token) {
-  try {
-    return JSON.parse(base64DecodeUtf8(token))
-  } catch {
+  if (error) {
+    console.error('Upload failed:', error)
     return null
+  }
+
+  const { data: urlData } = supabase.storage
+    .from(STORAGE_BUCKET)
+    .getPublicUrl(data.path)
+
+  return urlData?.publicUrl || null
+}
+
+/**
+ * Convert a blob URL to a File object for upload
+ * @param {string} blobUrl - The blob URL
+ * @param {string} filename - The filename
+ * @returns {Promise<File|null>}
+ */
+export async function blobUrlToFile(blobUrl, filename) {
+  try {
+    const response = await fetch(blobUrl)
+    const blob = await response.blob()
+    return new File([blob], filename, { type: blob.type })
+  } catch (err) {
+    console.error('Failed to convert blob URL:', err)
+    return null
+  }
+}
+
+/**
+ * Save card to Supabase database
+ * @param {string} cardId
+ * @param {object} payload
+ * @returns {Promise<boolean>}
+ */
+export async function saveSharedCard(cardId, payload) {
+  const { error } = await supabase
+    .from('shared_cards')
+    .insert({
+      id: cardId,
+      recipient_name: payload.recipientName || null,
+      sender_name: payload.senderName || null,
+      message: payload.message || null,
+      occasion_value: payload.occasionValue,
+      template_id: payload.templateId,
+      custom_color: payload.customColor || null,
+      media: payload.media || [],
+      created_at: new Date(payload.createdAt).toISOString(),
+      expires_at: new Date(payload.expiresAt).toISOString(),
+    })
+
+  if (error) {
+    console.error('Failed to save card:', error)
+    return false
+  }
+  return true
+}
+
+/**
+ * Fetch card from Supabase database
+ * @param {string} cardId
+ * @returns {Promise<{status: string, payload: object|null}>}
+ */
+export async function getCardData(cardId) {
+  const { data, error } = await supabase
+    .from('shared_cards')
+    .select('*')
+    .eq('id', cardId)
+    .single()
+
+  if (error || !data) {
+    return { status: 'missing', payload: null }
+  }
+
+  const expiresAt = new Date(data.expires_at).getTime()
+  if (Date.now() > expiresAt) {
+    return { status: 'expired', payload: formatPayload(data) }
+  }
+
+  return { status: 'ok', payload: formatPayload(data) }
+}
+
+function formatPayload(data) {
+  return {
+    cardId: data.id,
+    recipientName: data.recipient_name,
+    senderName: data.sender_name,
+    message: data.message,
+    occasionValue: data.occasion_value,
+    templateId: data.template_id,
+    customColor: data.custom_color,
+    media: data.media || [],
+    createdAt: new Date(data.created_at).getTime(),
+    expiresAt: new Date(data.expires_at).getTime(),
   }
 }
 
@@ -34,73 +132,4 @@ export function makeSharePayload(data) {
     createdAt,
     expiresAt,
   }
-}
-
-export function buildShareLink(cardId, payload) {
-  const token = encodeURIComponent(encodeSharePayload(payload))
-  return `${window.location.origin}/card/${cardId}?data=${token}`
-}
-
-function readStore() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return {}
-    const parsed = JSON.parse(raw)
-    return parsed && typeof parsed === 'object' ? parsed : {}
-  } catch {
-    return {}
-  }
-}
-
-function writeStore(store) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(store))
-}
-
-export function saveSharedCard(cardId, payload) {
-  const store = readStore()
-  store[cardId] = payload
-  writeStore(store)
-}
-
-export function getStoredSharedCard(cardId) {
-  const store = readStore()
-  return store[cardId] || null
-}
-
-export function purgeExpiredStoredCards() {
-  const now = Date.now()
-  const store = readStore()
-  let changed = false
-
-  Object.keys(store).forEach((key) => {
-    const item = store[key]
-    if (!item || typeof item.expiresAt !== 'number' || item.expiresAt <= now) {
-      delete store[key]
-      changed = true
-    }
-  })
-
-  if (changed) {
-    writeStore(store)
-  }
-}
-
-export function getCardDataFromRoute(cardId, searchParams) {
-  const token = searchParams.get('data')
-  const fromToken = token ? decodeSharePayload(token) : null
-  const payload = fromToken || getStoredSharedCard(cardId)
-
-  if (!payload) {
-    return { status: 'missing', payload: null }
-  }
-
-  if (payload.cardId !== cardId) {
-    return { status: 'missing', payload: null }
-  }
-
-  if (typeof payload.expiresAt !== 'number' || Date.now() > payload.expiresAt) {
-    return { status: 'expired', payload }
-  }
-
-  return { status: 'ok', payload }
 }
