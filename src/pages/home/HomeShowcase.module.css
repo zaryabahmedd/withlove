@@ -2,7 +2,7 @@
 .section {
   position: relative;
   padding: 0;
-  background: #FDF6F8;
+  background: #FFF8F4;
   overflow: hidden;
 }
 
@@ -19,11 +19,11 @@
 }
 .section::before {
   top: 0;
-  background: linear-gradient(to bottom, #FDF6F8 0%, transparent 100%);
+  background: linear-gradient(to bottom, #FFF8F4 0%, transparent 100%);
 }
 .section::after {
   bottom: 0;
-  background: linear-gradient(to top, #FDF6F8 0%, transparent 100%);
+  background: linear-gradient(to top, #FFF8F4 0%, transparent 100%);
 }
 
 /* ── Floating header — foreground over cards ── */
@@ -39,7 +39,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #F4487A;
+  color: #F54057;
   font-weight: 700;
   margin-bottom: 0.8rem;
 }
@@ -53,7 +53,7 @@
 }
 
 .accent {
-  background: linear-gradient(135deg, #F4487A, #FF8CB0);
+  background: linear-gradient(135deg, #F54057, #FDA71E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -73,7 +73,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(253, 246, 248, 0.15);
+  background: rgba(255, 248, 244, 0.2);
   pointer-events: none;
   z-index: 3;
 }
@@ -165,3 +165,4 @@
   filter: saturate(1) brightness(1);
   box-shadow: 0 20px 50px rgba(0,0,0,0.6);
 }
+

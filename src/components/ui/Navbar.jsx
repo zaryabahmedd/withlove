@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { NavLogo } from './Logo'
+import { ensureGuestSession } from '../../utils/guestSession'
 import styles from './Navbar.module.css'
 
 const navLinks = [
@@ -14,6 +15,7 @@ const navLinks = [
 export default function Navbar({ isDark, toggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [guestId, setGuestId] = useState('')
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
   const navigate = useNavigate()
@@ -22,6 +24,11 @@ export default function Navbar({ isDark, toggleTheme }) {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const guest = ensureGuestSession()
+    setGuestId(guest?.id || '')
   }, [])
 
   return (
@@ -92,6 +99,12 @@ export default function Navbar({ isDark, toggleTheme }) {
 
         {/* Right: Actions */}
         <div className={styles.actions}>
+          {guestId && (
+            <span className={styles.guestBadge} title={guestId}>
+              Guest: {guestId.replace('guest_', '')}
+            </span>
+          )}
+
           {/* Language */}
           <motion.button
             className={styles.langBtn}

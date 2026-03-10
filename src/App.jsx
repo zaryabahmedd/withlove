@@ -10,6 +10,8 @@ import Footer from './components/sections/Footer'
 import Preloader from './components/ui/Preloader'
 import HomePage from './pages/home/HomePage'
 import CardEditor from './pages/create/CardEditor'
+import CardSharePage from './pages/card/CardSharePage'
+import { ensureGuestSession } from './utils/guestSession'
 
 function LandingPage() {
   return (
@@ -34,6 +36,10 @@ export default function App() {
     localStorage.setItem('theme', isDark ? 'dark' : 'light')
   }, [isDark])
 
+  useEffect(() => {
+    ensureGuestSession()
+  }, [])
+
   return (
     <>
       <Preloader onComplete={() => setReady(true)} />
@@ -57,6 +63,7 @@ export default function App() {
             <Route path="/create" element={
               <main><CardEditor /></main>
             } />
+            <Route path="/card/:id" element={<CardSharePage />} />
           </Routes>
         </>
       )}

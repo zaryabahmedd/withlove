@@ -7,6 +7,13 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cardTemplates, cardOccasions, colorPresets } from "./card-templates";
+import {
+  buildShareLink,
+  generateCardId,
+  makeSharePayload,
+  purgeExpiredStoredCards,
+  saveSharedCard,
+} from "../../utils/cardShare";
 import styles from "./CardEditor.module.css";
 
 /* ─── SHARED MEDIA BLOCK ─── */
@@ -581,8 +588,20 @@ export default function CardEditor() {
   }, []);
 
   const handleSend = () => {
-    const id = Math.random().toString(36).substring(2, 10);
-    const link = `${window.location.origin}/card/${id}`;
+    purgeExpiredStoredCards();
+    const id = generateCardId();
+    const payload = makeSharePayload({
+      cardId: id,
+      recipientName,
+      senderName,
+      message,
+      occasionValue: occasion.value,
+      templateId: selectedTemplate.id,
+      customColor,
+      media: uploadedMedia.filter((item) => !String(item.url || '').startsWith('blob:')),
+    });
+    saveSharedCard(id, payload);
+    const link = buildShareLink(id, payload);
     setShareLink(link);
     setShowShareModal(true);
   };
@@ -1111,7 +1130,7 @@ export default function CardEditor() {
                   <Sparkles />
                 </motion.div>
                 <h3 className={styles.shareTitle}>Your card is ready! 🎉</h3>
-                <p className={styles.shareSubtitle}>Share this link with your special someone</p>
+                <p className={styles.shareSubtitle}>Share this link with your special someone. It will expire in 30 days.</p>
               </div>
               <div className={styles.shareLinkRow}>
                 <input type="text" readOnly value={shareLink} />

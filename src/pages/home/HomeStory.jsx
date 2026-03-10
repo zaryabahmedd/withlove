@@ -74,9 +74,9 @@ export default function HomeStory() {
           transition={{ duration: 0.7 }}
         >
           {[
-            { icon: '♡', label: 'Made with heart', color: '#F4487A' },
-            { icon: '✦', label: 'Beautifully simple', color: '#CC7A38' },
-            { icon: '⊹', label: 'Always personal', color: '#2BBFA4' },
+            { icon: '♡', label: 'Made with heart', color: '#F54057' },
+            { icon: '✦', label: 'Beautifully simple', color: '#FDA71E' },
+            { icon: '⊹', label: 'Always personal', color: '#FDA71E' },
           ].map((v) => (
             <div key={v.label} className={styles.value}>
               <span className={styles.valueIcon} style={{ color: v.color }}>{v.icon}</span>
@@ -88,3 +88,4 @@ export default function HomeStory() {
     </section>
   )
 }
+

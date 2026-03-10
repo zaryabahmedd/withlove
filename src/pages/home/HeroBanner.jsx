@@ -8,7 +8,7 @@ const SCATTER_CARDS = [
   { src: '/1135w-mLorQish-ds.webp', pos: 'pos1', rotate: -12, delay: 0.2 },
   { src: '/1067w-GBL7tdP2B-A.jpg',  pos: 'pos2', rotate: 4,  delay: 0.35 },
   { src: '/1135w-SBcw_sc90lA.webp', pos: 'pos3', rotate: 8,  delay: 0.5 },
-  { src: '/1135w-AxrG3hmgGM0.webp', pos: 'pos4', rotate: -3, delay: 0.15 },
+  { src: '/1135w-AxrG3hmgGM0.webp', pos: 'pos4', rotate: -10, delay: 0.15 },
   { src: '/1135w-N7NUFrSikUk.webp', pos: 'pos5', rotate: 5,  delay: 0.45 },
   { src: '/1067w-Rycs9qLPNBk.jpg',  pos: 'pos6', rotate: -8, delay: 0.6 },
   { src: '/1135w-ad8cLUg1kJY.webp',  pos: 'pos7', rotate: 7,  delay: 0.55 },

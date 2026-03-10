@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   height: 2.5px;
-  background: linear-gradient(90deg, #F4487A 0%, #FF8CB0 50%, #FFD166 100%);
+  background: linear-gradient(90deg, #F54057 0%, #FDA71E 50%, #FFD17A 100%);
   transform-origin: 0%;
   z-index: 200;
   pointer-events: none;
@@ -42,9 +42,9 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(244, 72, 122, 0.45) 25%,
-    rgba(255, 140, 176, 0.7) 50%,
-    rgba(244, 72, 122, 0.45) 75%,
+    rgba(245, 64, 87, 0.45) 25%,
+    rgba(253, 167, 30, 0.7) 50%,
+    rgba(245, 64, 87, 0.45) 75%,
     transparent 100%
   );
   opacity: 0;
@@ -99,8 +99,8 @@
 }
 
 .link:hover {
-  background: rgba(244, 72, 122, 0.08);
-  color: #D42860;
+  background: rgba(245, 64, 87, 0.08);
+  color: #FDA71E;
 }
 
 .linkIcon {
@@ -115,7 +115,7 @@
   left: 12px;
   right: 12px;
   height: 2px;
-  background: linear-gradient(90deg, #F4487A, #FF8CB0);
+  background: linear-gradient(90deg, #F54057, #FDA71E);
   border-radius: 2px;
   transform-origin: left center;
   display: block;
@@ -126,6 +126,23 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.guestBadge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 170px;
+  padding: 0.33rem 0.7rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.62);
+  color: #6b7280;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Language button */
@@ -147,9 +164,9 @@
 }
 
 .langBtn:hover {
-  background: rgba(244, 72, 122, 0.07);
-  border-color: rgba(244, 72, 122, 0.3);
-  color: #D42860;
+  background: rgba(245, 64, 87, 0.07);
+  border-color: rgba(245, 64, 87, 0.3);
+  color: #FDA71E;
 }
 
 /* Theme toggle */
@@ -169,9 +186,9 @@
 }
 
 .themeToggle:hover {
-  border-color: rgba(244, 72, 122, 0.5);
-  background: rgba(244, 72, 122, 0.09);
-  box-shadow: 0 0 16px rgba(244, 72, 122, 0.22);
+  border-color: rgba(245, 64, 87, 0.5);
+  background: rgba(245, 64, 87, 0.09);
+  box-shadow: 0 0 16px rgba(245, 64, 87, 0.22);
 }
 
 /* CTA button */
@@ -180,7 +197,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, #F4487A 0%, #E03070 55%, #CC2060 100%);
+  background: linear-gradient(135deg, #F54057 0%, #E03044 55%, #FDA71E 100%);
   color: white;
   border: none;
   padding: 0.58rem 1.35rem;
@@ -191,8 +208,8 @@
   font-family: inherit;
   letter-spacing: -0.01em;
   box-shadow:
-    0 4px 20px rgba(244, 72, 122, 0.42),
-    0 1px 4px rgba(244, 72, 122, 0.2),
+    0 4px 20px rgba(245, 64, 87, 0.42),
+    0 1px 4px rgba(245, 64, 87, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   overflow: hidden;
   transition: box-shadow 0.3s;
@@ -201,8 +218,8 @@
 
 .cta:hover {
   box-shadow:
-    0 6px 28px rgba(244, 72, 122, 0.56),
-    0 2px 8px rgba(244, 72, 122, 0.25),
+    0 6px 28px rgba(245, 64, 87, 0.56),
+    0 2px 8px rgba(245, 64, 87, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -256,7 +273,7 @@
 }
 
 .hamburger:hover {
-  background: rgba(244, 72, 122, 0.07);
+  background: rgba(245, 64, 87, 0.07);
 }
 
 .hamburger span {
@@ -278,7 +295,7 @@
   background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(244, 72, 122, 0.1);
+  border-bottom: 1px solid rgba(245, 64, 87, 0.1);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
@@ -301,7 +318,7 @@
   transition: color 0.2s;
 }
 
-.mobileLink:hover { color: #F4487A; }
+.mobileLink:hover { color: #F54057; }
 
 .mobileLinkIcon {
   opacity: 0.65;
@@ -310,7 +327,7 @@
 
 .ctaMobile {
   margin-top: 1.2rem;
-  background: linear-gradient(135deg, #F4487A, #E03870);
+  background: linear-gradient(135deg, #F54057, #FDA71E);
   color: white;
   border: none;
   padding: 0.9rem;
@@ -319,17 +336,17 @@
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
-  box-shadow: 0 4px 20px rgba(244, 72, 122, 0.4);
+  box-shadow: 0 4px 20px rgba(245, 64, 87, 0.4);
   transition: box-shadow 0.25s;
 }
 
 .ctaMobile:hover {
-  box-shadow: 0 6px 28px rgba(244, 72, 122, 0.55);
+  box-shadow: 0 6px 28px rgba(245, 64, 87, 0.55);
 }
 
 @media (max-width: 768px) {
   .nav { padding: 0.75rem 1.25rem; }
-  .linksWrap, .cta, .langBtn { display: none; }
+  .linksWrap, .cta, .langBtn, .guestBadge { display: none; }
   .hamburger { display: flex; }
   .themeToggle { width: 34px; height: 34px; }
 }
@@ -350,31 +367,37 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(244, 72, 122, 0.6) 25%,
-    rgba(255, 140, 176, 0.85) 50%,
-    rgba(244, 72, 122, 0.6) 75%,
+    rgba(245, 64, 87, 0.6) 25%,
+    rgba(253, 167, 30, 0.85) 50%,
+    rgba(245, 64, 87, 0.6) 75%,
     transparent 100%
   );
 }
 
 :global([data-theme="dark"]) .link {
-  color: #C8A0B8;
+  color: #FDA71E;
 }
 
 :global([data-theme="dark"]) .link:hover {
-  background: rgba(244, 72, 122, 0.12);
-  color: #FF8CB0;
+  background: rgba(245, 64, 87, 0.12);
+  color: #FDA71E;
 }
 
 :global([data-theme="dark"]) .langBtn {
-  color: #9070A0;
+  color: #FDA71E;
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+:global([data-theme="dark"]) .guestBadge {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #FDA71E;
+}
+
 :global([data-theme="dark"]) .langBtn:hover {
-  background: rgba(244, 72, 122, 0.1);
-  border-color: rgba(244, 72, 122, 0.3);
-  color: #FF8CB0;
+  background: rgba(245, 64, 87, 0.1);
+  border-color: rgba(245, 64, 87, 0.3);
+  color: #FDA71E;
 }
 
 :global([data-theme="dark"]) .themeToggle {
@@ -383,33 +406,34 @@
 }
 
 :global([data-theme="dark"]) .themeToggle:hover {
-  border-color: rgba(244, 72, 122, 0.5);
-  background: rgba(244, 72, 122, 0.12);
+  border-color: rgba(245, 64, 87, 0.5);
+  background: rgba(245, 64, 87, 0.12);
 }
 
 :global([data-theme="dark"]) .hamburger span {
-  background: #C8A0B8;
+  background: #FDA71E;
 }
 
 :global([data-theme="dark"]) .mobileMenu {
   background: rgba(14, 8, 13, 0.98);
-  border-bottom-color: rgba(244, 72, 122, 0.18);
+  border-bottom-color: rgba(245, 64, 87, 0.2);
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
 }
 
 :global([data-theme="dark"]) .mobileLink {
-  color: #C8A0B8;
-  border-bottom-color: rgba(244, 72, 122, 0.1);
+  color: #FDA71E;
+  border-bottom-color: rgba(245, 64, 87, 0.12);
 }
 
 :global([data-theme="dark"]) .mobileLink:hover {
-  color: #FF8CB0;
+  color: #FDA71E;
 }
 
 :global([data-theme="dark"]) .progressBar {
-  background: linear-gradient(90deg, #F4487A, #C9B8FF, #FFD166);
+  background: linear-gradient(90deg, #F54057, #FDA71E, #FDA71E);
 }
 
 :global([data-theme="dark"]) .ctaMobile {
-  background: linear-gradient(135deg, #F4487A, #D42868);
+  background: linear-gradient(135deg, #F54057, #FDA71E);
 }
+

@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-/* Soft pink blobs — light mode */
+/* Soft green blobs — light mode */
 .hero::before {
   content: '';
   position: absolute;
@@ -21,8 +21,8 @@
   height: 650px;
   border-radius: 50%;
   background: radial-gradient(circle at 45% 45%,
-    rgba(255,160,180,0.35) 0%,
-    rgba(255,200,210,0.15) 45%,
+    rgba(245,64,87,0.22) 0%,
+    rgba(253,167,30,0.16) 45%,
     transparent 70%
   );
   pointer-events: none;
@@ -38,8 +38,8 @@
   height: 500px;
   border-radius: 50%;
   background: radial-gradient(circle at 55% 55%,
-    rgba(255,210,160,0.2) 0%,
-    rgba(255,230,200,0.1) 50%,
+    rgba(253,167,30,0.2) 0%,
+    rgba(245,64,87,0.1) 50%,
     transparent 70%
   );
   pointer-events: none;
@@ -70,7 +70,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #F4487A;
+  background: #F54057;
   display: inline-block;
 }
 
@@ -79,7 +79,7 @@
   position: absolute;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(244,72,122,0.08);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(245,64,87,0.08);
   cursor: pointer;
   will-change: transform;
   z-index: 2;
@@ -116,15 +116,16 @@
   aspect-ratio: 3/4;
 }
 
-/* Position 4: Center — overlapping "IMPOSSIBLE" text, IN FRONT */
+/* Position 4: Center — behind text block and button */
 .pos4 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -55%);
   width: clamp(150px, 15vw, 240px);
   aspect-ratio: 3/4;
-  z-index: 5;
+  z-index: 2;
   border-radius: 12px;
+  opacity: 0.88;
 }
 
 /* Position 5: Right center */
@@ -158,7 +159,7 @@
   top: 18%;
   right: 18%;
   font-size: 1.6rem;
-  color: #F4487A;
+  color: #F54057;
   z-index: 6;
   pointer-events: none;
 }
@@ -168,7 +169,7 @@
   bottom: 22%;
   left: 20%;
   font-size: 2.4rem;
-  color: rgba(200,120,80,0.35);
+  color: rgba(253, 167, 30, 0.35);
   z-index: 6;
   pointer-events: none;
   font-family: 'Playfair Display', serif;
@@ -216,7 +217,7 @@
   text-transform: uppercase;
   letter-spacing: -0.04em;
   font-size: clamp(4rem, 12vw, 15rem);
-  background: linear-gradient(135deg, #D93060 0%, #F4487A 35%, #B01040 70%, #D93060 100%);
+  background: linear-gradient(135deg, #FDA71E 0%, #F54057 35%, #FDA71E 70%, #FDA71E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -229,25 +230,25 @@
   margin-top: 4.5rem;
   padding: 1em 2.8em;
   border-radius: 999px;
-  background: linear-gradient(135deg, #F4487A 0%, #D93060 100%);
+  background: linear-gradient(135deg, #F54057 0%, #FDA71E 100%);
   color: #fff;
   font-family: 'Nunito', sans-serif;
   font-size: clamp(0.95rem, 1.5vw, 1.15rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   text-decoration: none;
-  box-shadow: 0 10px 32px rgba(244, 72, 122, 0.4);
+  box-shadow: 0 10px 32px rgba(245, 64, 87, 0.35);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .ctaButton:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 14px 40px rgba(244, 72, 122, 0.5);
+  box-shadow: 0 14px 40px rgba(245, 64, 87, 0.45);
 }
 
 .ctaButton:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: 0 6px 18px rgba(244, 72, 122, 0.3);
+  box-shadow: 0 6px 18px rgba(245, 64, 87, 0.28);
 }
 
 /* ── Scroll cue ── */
@@ -291,14 +292,14 @@
 
 :global([data-theme="dark"]) .hero::before {
   background: radial-gradient(circle at 45% 45%,
-    rgba(244,72,122,0.08) 0%,
+    rgba(245,64,87,0.1) 0%,
     transparent 70%
   );
 }
 
 :global([data-theme="dark"]) .hero::after {
   background: radial-gradient(circle at 55% 55%,
-    rgba(200,169,110,0.05) 0%,
+    rgba(253, 167, 30, 0.1) 0%,
     transparent 70%
   );
 }
@@ -312,7 +313,7 @@
 }
 
 :global([data-theme="dark"]) .sparkle2 {
-  color: rgba(200,169,110,0.5);
+  color: rgba(253, 167, 30, 0.5);
 }
 
 :global([data-theme="dark"]) .line1,
@@ -322,7 +323,7 @@
 }
 
 :global([data-theme="dark"]) .line3 {
-  background: linear-gradient(135deg, #C8A96E 0%, #E8D5A6 35%, #B89850 70%, #C8A96E 100%);
+  background: linear-gradient(135deg, #F54057 0%, #FDA71E 35%, #FDA71E 70%, #F54057 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -331,3 +332,4 @@
 :global([data-theme="dark"]) .scrollLine {
   background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
 }
+

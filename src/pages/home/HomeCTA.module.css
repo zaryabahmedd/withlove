@@ -1,34 +1,53 @@
-/* ═══ EDITORIAL CTA ═══ */
+/* ═══ HOME CTA — rich design matching main site CTA ═══ */
 .section {
   position: relative;
-  padding: 8rem 2rem;
-  background: #FDF6F8;
+  padding: 6rem 2rem 5rem;
+  background: linear-gradient(170deg, #FFF5F0 0%, #FFF2F5 25%, #FFF0F8 55%, #FFF4EC 100%);
   overflow: hidden;
   text-align: center;
 }
 
-.glow1 {
+/* ── Floating orbs ── */
+.orbPrimary {
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: 420px;
+  height: 420px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(244,72,122,0.12) 0%, transparent 70%);
-  top: -100px;
+  background: radial-gradient(circle, rgba(245, 64, 87, 0.18) 0%, transparent 70%);
+  top: -80px;
   left: -100px;
   pointer-events: none;
+  filter: blur(40px);
 }
 
-.glow2 {
+.orbSecondary {
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 380px;
+  height: 380px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,160,100,0.09) 0%, transparent 70%);
-  bottom: -80px;
+  background: radial-gradient(circle, rgba(253, 167, 30, 0.18) 0%, transparent 70%);
+  bottom: -60px;
   right: -80px;
   pointer-events: none;
+  filter: blur(40px);
 }
 
+/* ── Sparkle field ── */
+.sparkleField {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  background: #F54057;
+  box-shadow: 0 0 6px 1px rgba(245, 64, 87, 0.4);
+}
+
+/* ── Inner container ── */
 .inner {
   position: relative;
   z-index: 2;
@@ -37,122 +56,261 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0;
 }
 
+/* ── Card Fan ── */
+.fanWrap {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 200px;
+  width: 400px;
+  margin-bottom: 2.5rem;
+  perspective: 800px;
+}
+
+.fanCard {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transform-origin: center bottom;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  will-change: transform;
+}
+
+.fanImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.fanShine {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    125deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 48%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: fanShimmer 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fanShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Eyebrow ── */
 .eyebrow {
-  font-size: 0.85rem;
-  color: #F4487A;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
   font-weight: 700;
+  color: #F54057;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
 }
 
+/* ── Heading ── */
 .heading {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-family: 'Plus Jakarta Sans', 'Nunito', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
   font-weight: 900;
-  color: #1c1c1e;
   line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #1c1c1e;
+  margin-bottom: 1rem;
 }
 
-.headingGold {
-  background: linear-gradient(135deg, #D93060, #F4487A);
+.headingGrad {
+  background: linear-gradient(135deg, #F54057 0%, #D63050 35%, #FDA71E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.sub {
-  font-size: 1.05rem;
-  color: rgba(28,28,30,0.48);
+/* ── Subtext ── */
+.subtext {
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  color: #6b7280;
   line-height: 1.7;
-  max-width: 500px;
+  font-weight: 500;
+  max-width: 480px;
+  margin-bottom: 2rem;
 }
 
-/* ── Buttons ── */
-.actions {
+/* ── Button Row ── */
+.buttonRow {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
-.primaryBtn {
+/* Primary CTA */
+.ctaButton {
   position: relative;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.95rem 2rem;
-  background: linear-gradient(135deg, #F4487A, #D63060);
-  color: #fff;
+  gap: 8px;
+  padding: 1.05rem 2.6rem;
   border: none;
-  border-radius: 60px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  border-radius: 100px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.06rem;
+  font-weight: 800;
+  color: #fff;
   cursor: pointer;
-  font-family: inherit;
-  letter-spacing: 0.01em;
+  overflow: hidden;
+  background: linear-gradient(140deg, #F54057 0%, #E03050 50%, #CC1E40 100%);
+  box-shadow:
+    0 8px 32px rgba(245, 64, 87, 0.35),
+    0 2px 8px rgba(245, 64, 87, 0.2);
+  transition: box-shadow 0.35s;
+  z-index: 1;
 }
 
-.btnShimmer {
+.ctaButton::before {
+  content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
-  animation: shimmerSlide 3s infinite;
+  border-radius: 100px;
+  background: linear-gradient(140deg, #FF6B7E 0%, #F54057 50%, #CC1E40 100%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: -1;
 }
 
-@keyframes shimmerSlide {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
+.ctaButton:hover::before {
+  opacity: 1;
+}
+
+.btnIcon {
+  font-size: 1rem;
 }
 
 .btnArrow {
-  display: inline-block;
-  transition: transform 0.2s;
-  margin-left: 0.2rem;
+  font-size: 1.15rem;
+  margin-left: 2px;
+  transition: transform 0.3s;
 }
 
-.primaryBtn:hover .btnArrow {
+.ctaButton:hover .btnArrow {
   transform: translateX(4px);
 }
 
-.ghostBtn {
-  padding: 0.95rem 2rem;
+/* Ripple */
+.ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Secondary button */
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1.05rem 2rem;
+  border: 2px solid rgba(245, 64, 87, 0.25);
+  border-radius: 100px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #F54057;
   background: transparent;
-  color: rgba(28,28,30,0.55);
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 60px;
-  font-size: 0.95rem;
-  font-weight: 600;
   cursor: pointer;
-  font-family: inherit;
-  transition: border-color 0.3s, color 0.3s;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
-.ghostBtn:hover {
-  color: #1c1c1e;
+.secondaryBtn:hover {
+  border-color: #F54057;
 }
 
+/* ── Trust Signal ── */
 .trust {
-  font-size: 0.82rem;
-  color: rgba(28,28,30,0.35);
-  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.trust strong {
-  color: rgba(28,28,30,0.55);
+.trustAvatars {
+  display: flex;
+}
+
+.trustAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  margin-left: -8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trustAvatar:first-child {
+  margin-left: 0;
+}
+
+.trustText {
+  font-size: 0.82rem;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.trustText strong {
+  color: #6b7280;
 }
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
-  .actions {
+  .section {
+    padding: 4rem 1.25rem 3.5rem;
+  }
+
+  .fanWrap {
+    width: 300px;
+    height: 160px;
+  }
+
+  .fanCard {
+    width: 90px;
+    height: 120px;
+  }
+
+  .buttonRow {
     flex-direction: column;
+    gap: 10px;
     width: 100%;
   }
-  .primaryBtn,
-  .ghostBtn {
+
+  .ctaButton,
+  .secondaryBtn {
     width: 100%;
     justify-content: center;
-    text-align: center;
+  }
+
+  .trust {
+    flex-direction: column;
+    gap: 6px;
   }
 }
 
@@ -160,41 +318,44 @@
    DARK MODE
 ══════════════════════════════════ */
 :global([data-theme="dark"]) .section {
-  background: #0A0A0A;
+  background: linear-gradient(170deg, #0E0808 0%, #110B0D 25%, #120910 55%, #0E0A08 100%);
 }
 
-:global([data-theme="dark"]) .glow2 {
-  background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+:global([data-theme="dark"]) .orbPrimary {
+  background: radial-gradient(circle, rgba(245, 64, 87, 0.28) 0%, transparent 70%);
+}
+
+:global([data-theme="dark"]) .orbSecondary {
+  background: radial-gradient(circle, rgba(253, 167, 30, 0.22) 0%, transparent 70%);
+}
+
+:global([data-theme="dark"]) .eyebrow {
+  color: #F87080;
 }
 
 :global([data-theme="dark"]) .heading {
-  color: #fff;
+  color: #F5EAEC;
 }
 
-:global([data-theme="dark"]) .headingGold {
-  background: linear-gradient(135deg, #C8A96E, #E8D5A6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+:global([data-theme="dark"]) .subtext {
+  color: #A87880;
 }
 
-:global([data-theme="dark"]) .sub {
-  color: rgba(255,255,255,0.45);
+:global([data-theme="dark"]) .secondaryBtn {
+  color: #F87080;
+  border-color: rgba(245, 64, 87, 0.35);
 }
 
-:global([data-theme="dark"]) .ghostBtn {
-  color: rgba(255,255,255,0.65);
-  border-color: rgba(255,255,255,0.15);
+:global([data-theme="dark"]) .secondaryBtn:hover {
+  background-color: rgba(245, 64, 87, 0.1);
+  border-color: rgba(245, 64, 87, 0.55);
 }
 
-:global([data-theme="dark"]) .ghostBtn:hover {
-  color: #fff;
+:global([data-theme="dark"]) .trustText {
+  color: #7A5860;
 }
 
-:global([data-theme="dark"]) .trust {
-  color: rgba(255,255,255,0.3);
+:global([data-theme="dark"]) .trustText strong {
+  color: #A87880;
 }
 
-:global([data-theme="dark"]) .trust strong {
-  color: rgba(255,255,255,0.5);
-}

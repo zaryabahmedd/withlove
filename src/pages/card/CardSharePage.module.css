@@ -1,0 +1,151 @@
+.page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 6rem 1.5rem 2rem;
+  background: linear-gradient(160deg, #fff8f6 0%, #fff3ef 55%, #fff1e9 100%);
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: rgba(20, 20, 20, 0.55);
+}
+
+.card {
+  width: 100%;
+  border: 1px solid;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.badge {
+  align-self: flex-start;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+}
+
+.to {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 6vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.message {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.signatureRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-top: 1px solid;
+  padding-top: 1rem;
+}
+
+.signatureLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.signatureName {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.stateCard {
+  max-width: 560px;
+  width: 100%;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 2rem 1.4rem;
+  text-align: center;
+}
+
+.stateCard h1 {
+  margin: 0 0 0.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 5vw, 2.2rem);
+}
+
+.stateCard p {
+  margin: 0;
+  color: rgba(20, 20, 20, 0.65);
+  line-height: 1.6;
+}
+
+.actions {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnPrimary,
+.btnGhost {
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, #f54057, #fda71e);
+  color: #fff;
+}
+
+.btnGhost {
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  color: rgba(20, 20, 20, 0.76);
+}
+
+:global([data-theme='dark']) .page {
+  background: linear-gradient(160deg, #140b0d 0%, #180c10 55%, #120f08 100%);
+}
+
+:global([data-theme='dark']) .meta {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+:global([data-theme='dark']) .card,
+:global([data-theme='dark']) .stateCard {
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+:global([data-theme='dark']) .stateCard p {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+:global([data-theme='dark']) .btnGhost {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+}

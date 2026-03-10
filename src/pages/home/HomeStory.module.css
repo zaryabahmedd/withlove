@@ -2,7 +2,7 @@
 .section {
   position: relative;
   padding: 8rem 0;
-  background: #FFF5F7;
+  background: #FFF8F4;
 }
 
 .inner {
@@ -34,7 +34,7 @@
 }
 
 .quoteAccent {
-  background: linear-gradient(135deg, #F4487A, #FF8CB0);
+  background: linear-gradient(135deg, #F54057, #FDA71E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -73,7 +73,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
   font-weight: 900;
-  background: linear-gradient(135deg, #D93060, #F4487A);
+  background: linear-gradient(135deg, #FDA71E, #F54057);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -150,7 +150,7 @@
 }
 
 :global([data-theme="dark"]) .statNum {
-  background: linear-gradient(135deg, #C8A96E, #E8D5A6);
+  background: linear-gradient(135deg, #FDA71E, #FDA71E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -167,3 +167,4 @@
 :global([data-theme="dark"]) .valueLabel {
   color: rgba(255,255,255,0.45);
 }
+

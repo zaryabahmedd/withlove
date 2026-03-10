@@ -7,7 +7,7 @@ const FEATURES = [
     num: '01',
     title: 'Easy to Build',
     desc: 'Choose a theme, add your message, and customize every detail. No design skills needed — pick, type, and you\'re done in under 60 seconds.',
-    color: '#F4487A',
+    color: '#F54057',
     tag: '60 sec',
     cards: ['/1135w-mLorQish-ds.webp', '/1135w-SBcw_sc90lA.webp', '/1067w-GBL7tdP2B-A.jpg'],
   },
@@ -15,22 +15,22 @@ const FEATURES = [
     num: '02',
     title: 'Share Instantly',
     desc: 'Generate a unique link to send via text, email, or social media. Your card arrives beautifully, ready to open on any device.',
-    color: '#6C63FF',
+    color: '#FDA71E',
     tag: 'Any device',
   },
   {
     num: '03',
     title: 'Collaborative',
     desc: 'Invite friends and family to co-sign. Turn a single card into a chorus of people who care.',
-    color: '#2BBFA4',
+    color: '#FDA71E',
     tag: 'Group cards',
   },
 ]
 
 const SIGS = [
-  { name: 'Sarah', initials: 'S', color: '#F4487A', note: '🎉 Happy Birthday!! Miss you so much!' },
-  { name: 'Alex',  initials: 'A', color: '#6C63FF', note: 'Wishing you the best year yet 🥳' },
-  { name: 'Mom',   initials: 'M', color: '#2BBFA4', note: 'So proud of you every single day ❤️' },
+  { name: 'Sarah', initials: 'S', color: '#F54057', note: '🎉 Happy Birthday!! Miss you so much!' },
+  { name: 'Alex',  initials: 'A', color: '#FDA71E', note: 'Wishing you the best year yet 🥳' },
+  { name: 'Mom',   initials: 'M', color: '#FDA71E', note: 'So proud of you every single day ❤️' },
 ]
 
 /* ─────────────────────────────────────────
@@ -303,7 +303,7 @@ function CollabTile({ f }) {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className={styles.noteAvatar} style={{ background: '#FF9D42' }}>J</div>
+            <div className={styles.noteAvatar} style={{ background: '#FDA71E' }}>J</div>
             <div className={styles.typingDots}>
               {[0, 1, 2].map(i => (
                 <motion.span
@@ -355,3 +355,4 @@ export default function HomeFeatures() {
     </section>
   )
 }
+

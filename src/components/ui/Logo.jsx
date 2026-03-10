@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import styles from './Logo.module.css'
 
-const logoSrc = '/With_Love_transparent_1767397236984-CNLkaJTe.png'
+const logoSrc = '/WhatsApp_Image_2026-03-09_at_8.48.51_PM-removebg-preview.png'
 const MotionLink = motion(Link)
 
 // Navbar variant — small, subtle entrance + hover wiggle
