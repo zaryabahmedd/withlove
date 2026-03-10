@@ -673,7 +673,7 @@ export default function CardEditor() {
       recorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: "audio/webm" });
         const url = URL.createObjectURL(blob);
-        setUploadedMedia((prev) => [...prev, { type: "audio", name: "Voice Recording", url }]);
+        setUploadedMedia((prev) => [...prev, { type: "audio", name: "voice-recording.webm", url }]);
         stream.getTracks().forEach((t) => t.stop());
         streamRef.current = null;
         setRecordingTime(0);
@@ -715,7 +715,7 @@ export default function CardEditor() {
       recorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: "video/webm" });
         const url = URL.createObjectURL(blob);
-        setUploadedMedia((prev) => [...prev, { type: "video", name: "Video Recording", url }]);
+        setUploadedMedia((prev) => [...prev, { type: "video", name: "video-recording.webm", url }]);
         stream.getTracks().forEach((t) => t.stop());
         streamRef.current = null;
         setRecordingTime(0);
