@@ -47,19 +47,19 @@ export default function App() {
         <>
           <Navbar isDark={isDark} toggleTheme={() => setIsDark(d => !d)} />
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={
+              <>
+                <main><HomePage /></main>
+                <Footer />
+              </>
+            } />
             <Route path="/home" element={
               <>
                 <main><HomePage /></main>
                 <Footer />
               </>
             } />
-            <Route path="/sample-2" element={
-              <>
-                <main><HomePage /></main>
-                <Footer />
-              </>
-            } />
+            <Route path="/sample-2" element={<LandingPage />} />
             <Route path="/create" element={
               <main><CardEditor /></main>
             } />
