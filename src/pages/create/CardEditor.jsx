@@ -582,11 +582,16 @@ export default function CardEditor() {
   const timerRef = useRef(null);
 
   const handleFileUpload = useCallback((e, type) => {
-    const file = e.target.files?.[0];
+    const input = e.target;
+    const file = input.files?.[0];
+
     if (file) {
       const url = URL.createObjectURL(file);
-      setUploadedMedia((prev) => [...prev, { type, name: file.name, url }]);
+      setUploadedMedia((prev) => [...prev, { type, name: file.name, url, file }]);
     }
+
+    // Reset input value so selecting the same file again still triggers onChange.
+    input.value = "";
   }, []);
 
   const handleSend = async () => {
@@ -599,8 +604,10 @@ export default function CardEditor() {
       for (const item of uploadedMedia) {
         let publicUrl = null;
 
-        if (item.url?.startsWith('blob:')) {
-          // Convert blob URL to file and upload
+        if (item.file instanceof File) {
+          publicUrl = await uploadMedia(item.file, id);
+        } else if (item.url?.startsWith('blob:')) {
+          // Fallback for older in-memory media items without a stored File object.
           const file = await blobUrlToFile(item.url, item.name || `media.${item.type === 'image' ? 'jpg' : item.type === 'video' ? 'webm' : 'webm'}`);
           if (file) {
             publicUrl = await uploadMedia(file, id);
