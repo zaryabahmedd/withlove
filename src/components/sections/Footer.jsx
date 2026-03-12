@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import styles from './Footer.module.css'
 
 const COLS = {
@@ -50,9 +49,6 @@ const SOCIALS = [
 ]
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [sent, setSent] = useState(false)
-
   return (
     <footer className={styles.footer} id="footer">
       {/* Aurora background blobs */}
@@ -60,7 +56,7 @@ export default function Footer() {
       <div className={styles.aurora2} />
       <div className={styles.aurora3} />
 
-      {/* ── TOP: Brand + Newsletter ── */}
+      {/* ── TOP: Brand ── */}
       <div className={styles.topSection}>
         <motion.div
           className={styles.brand}
@@ -81,60 +77,6 @@ export default function Footer() {
             <span className={styles.brandBadge}>✦ Free forever</span>
             <span className={styles.brandBadge}>♡ 2.4M+ cards sent</span>
           </div>
-        </motion.div>
-
-        <motion.div
-          className={styles.newsletterBlock}
-          initial={{ opacity: 0, x: 24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.15, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className={styles.newsletterHead}>Stay in the loop</p>
-          <p className={styles.newsletterSub}>
-            Card inspiration, new themes, and thoughtful ideas — straight to your inbox.
-          </p>
-
-          <AnimatePresence mode="wait">
-            {!sent ? (
-              <motion.form
-                key="form"
-                className={styles.newsletterForm}
-                onSubmit={(e) => { e.preventDefault(); if (email.trim()) setSent(true) }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, y: -8 }}
-              >
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  className={styles.emailInput}
-                  required
-                />
-                <motion.button
-                  type="submit"
-                  className={styles.subBtn}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <span className={styles.subShimmer} />
-                  Subscribe ✦
-                </motion.button>
-              </motion.form>
-            ) : (
-              <motion.p
-                key="sent"
-                className={styles.sentMsg}
-                initial={{ opacity: 0, scale: 0.92, y: 8 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ type: 'spring', stiffness: 220, damping: 18 }}
-              >
-                ✦ You're in — something beautiful is heading your way.
-              </motion.p>
-            )}
-          </AnimatePresence>
         </motion.div>
       </div>
 

@@ -58,17 +58,15 @@
   pointer-events: none;
 }
 
-/* ── TOP SECTION: Brand + Newsletter ── */
+/* ── TOP SECTION: Brand ── */
 .topSection {
   position: relative;
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
   padding: 5.5rem 2rem 4.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: center;
+  display: flex;
+  justify-content: flex-start;
 }
 
 /* Brand side */
@@ -109,116 +107,6 @@
   border-radius: 100px;
   padding: 0.32rem 0.9rem;
   letter-spacing: 0.01em;
-}
-
-/* Newsletter side */
-.newsletterBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 24px;
-  padding: 2.2rem 2rem;
-}
-
-.newsletterHead {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.newsletterSub {
-  font-size: 0.87rem;
-  color: rgba(255, 255, 255, 0.38);
-  line-height: 1.6;
-  margin: 0 0 0.5rem;
-}
-
-.newsletterForm {
-  display: flex;
-  gap: 0.65rem;
-}
-
-.emailInput {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 100px;
-  padding: 0.72rem 1.3rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.88rem;
-  font-family: inherit;
-  outline: none;
-  min-width: 0;
-  transition: border-color 0.25s, background 0.25s;
-}
-
-.emailInput::placeholder {
-  color: rgba(255, 255, 255, 0.25);
-}
-
-.emailInput:focus {
-  border-color: rgba(244, 72, 122, 0.5);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.subBtn {
-  position: relative;
-  background: linear-gradient(135deg, #F4487A 0%, #E03070 55%, #CC2060 100%);
-  color: white;
-  border: none;
-  padding: 0.72rem 1.45rem;
-  border-radius: 100px;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  font-family: inherit;
-  overflow: hidden;
-  box-shadow:
-    0 4px 20px rgba(244, 72, 122, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  transition: box-shadow 0.25s;
-  flex-shrink: 0;
-}
-
-.subBtn:hover {
-  box-shadow:
-    0 6px 28px rgba(244, 72, 122, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-}
-
-/* Moving shimmer inside button */
-.subShimmer {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    108deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.25) 50%,
-    transparent 65%
-  );
-  background-size: 250% 100%;
-  animation: shimmer 3.2s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes shimmer {
-  0%   { background-position: 230% 0; }
-  100% { background-position: -230% 0; }
-}
-
-.sentMsg {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 0.8rem 1.2rem;
-  background: rgba(244, 72, 122, 0.1);
-  border: 1.5px solid rgba(244, 72, 122, 0.22);
-  border-radius: 100px;
-  text-align: center;
 }
 
 /* ── LINKS section ── */
@@ -363,8 +251,6 @@
 /* ── Responsive ── */
 @media (max-width: 960px) {
   .topSection {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
     padding: 4.5rem 1.5rem 3.5rem;
   }
 
@@ -385,9 +271,5 @@
 @media (max-width: 600px) {
   .topSection { padding: 3.5rem 1.25rem 2.5rem; }
   .linksSection { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; padding: 0 1.25rem 3rem; }
-  .newsletterForm { flex-direction: column; }
-  .emailInput { border-radius: 14px; }
-  .subBtn { border-radius: 14px; text-align: center; }
-  .newsletterBlock { padding: 1.6rem 1.25rem; }
   .brandLogo { height: 48px; }
 }
