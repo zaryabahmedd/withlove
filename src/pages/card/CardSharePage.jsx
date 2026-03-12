@@ -142,10 +142,6 @@ export default function CardSharePage() {
           </div>
         </article>
 
-        <div className={styles.actions}>
-          <Link to="/create" className={styles.btnPrimary}>Create your own</Link>
-          <Link to="/" className={styles.btnGhost}>Go home</Link>
-        </div>
       </div>
     </main>
   )

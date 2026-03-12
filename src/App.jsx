@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/ui/Navbar'
 import Hero from './components/sections/Hero'
@@ -40,12 +40,15 @@ export default function App() {
     ensureGuestSession()
   }, [])
 
+  const location = useLocation()
+  const isCardSharePage = location.pathname.startsWith('/card/')
+
   return (
     <>
       <Preloader onComplete={() => setReady(true)} />
       {ready && (
         <>
-          <Navbar isDark={isDark} toggleTheme={() => setIsDark(d => !d)} />
+          {!isCardSharePage && <Navbar isDark={isDark} toggleTheme={() => setIsDark(d => !d)} />}
           <Routes>
             <Route path="/" element={
               <>
