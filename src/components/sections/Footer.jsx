@@ -1,11 +1,24 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import styles from './Footer.module.css'
 
-const COLS = {
-  Product:   ['Create a Card', 'Browse Themes', 'Pricing', 'My Cards', 'Bulk Send'],
-  Occasions: ['Birthday', 'Anniversary', 'Congratulations', 'Thank You', 'Get Well Soon'],
-  Company:   ['About Us', 'Blog', 'Careers', 'Press Kit', 'Legal'],
-}
+const PRODUCT_LINKS = [
+  { label: 'Create a Card', to: '/create' },
+  { label: 'Pricing', to: '/pricing' },
+]
+
+const OCCASION_LINKS = [
+  { label: 'Birthday', to: '/create?occasion=birthday' },
+  { label: 'Anniversary', to: '/create?occasion=anniversary' },
+  { label: 'Congratulations', to: '/create?occasion=congrats' },
+  { label: 'Thank You', to: '/create?occasion=thankyou' },
+  { label: 'Get Well Soon', to: '/create?occasion=getwell' },
+]
+
+const COMPANY_LINKS = [
+  { label: 'About Us', to: '/about' },
+  { label: 'Blog', to: '#' },
+]
 
 const SOCIALS = [
   {
@@ -82,29 +95,65 @@ export default function Footer() {
 
       {/* ── MIDDLE: Link columns ── */}
       <div className={styles.linksSection}>
-        {Object.entries(COLS).map(([col, items], ci) => (
-          <motion.div
-            key={col}
-            className={styles.linkCol}
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.08 * ci, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className={styles.colHead}>{col}</p>
-            {items.map((item) => (
-              <motion.a
-                key={item}
-                href="#"
-                className={styles.footLink}
-                whileHover={{ x: 5, color: 'rgba(255,140,176,0.9)' }}
-                transition={{ duration: 0.15 }}
-              >
-                {item}
-              </motion.a>
-            ))}
-          </motion.div>
-        ))}
+        {/* Product column */}
+        <motion.div
+          className={styles.linkCol}
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className={styles.colHead}>Product</p>
+          {PRODUCT_LINKS.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className={styles.footLink}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </motion.div>
+
+        {/* Occasions column */}
+        <motion.div
+          className={styles.linkCol}
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className={styles.colHead}>Occasions</p>
+          {OCCASION_LINKS.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className={styles.footLink}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </motion.div>
+
+        {/* Company column */}
+        <motion.div
+          className={styles.linkCol}
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.16, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className={styles.colHead}>Company</p>
+          {COMPANY_LINKS.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className={styles.footLink}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </motion.div>
 
         {/* Follow us column */}
         <motion.div
@@ -150,7 +199,7 @@ export default function Footer() {
 
       {/* ── BOTTOM: Copyright strip ── */}
       <div className={styles.bottomStrip}>
-        <p className={styles.copyright}>© 2026 cardhazza. All rights reserved.</p>
+        <p className={styles.copyright}>© 2026 All rights reserved.</p>
 
         <p className={styles.madeWith}>
           Made with{' '}

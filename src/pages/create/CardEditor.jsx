@@ -5,7 +5,7 @@ import {
   Send, Copy, Check, X, ArrowLeft, Users, Sparkles,
   Eye, Heart, Square, Palette, Loader2,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { cardTemplates, cardOccasions, colorPresets } from "./card-templates";
 import {
   buildShareLink,
@@ -551,10 +551,16 @@ function CardPreview({ template, recipientName, senderName, message, occasion, m
 ═══════════════════════════════════════════ */
 
 export default function CardEditor() {
+  const [searchParams] = useSearchParams();
+  const occasionParam = searchParams.get('occasion');
+  const initialOccasion = occasionParam
+    ? cardOccasions.find((o) => o.value === occasionParam) || cardOccasions[5]
+    : cardOccasions[5];
+
   const [recipientName, setRecipientName] = useState("");
   const [senderName, setSenderName] = useState("");
   const [message, setMessage] = useState("");
-  const [occasion, setOccasion] = useState(cardOccasions[5]);
+  const [occasion, setOccasion] = useState(initialOccasion);
   const [selectedTemplate, setSelectedTemplate] = useState(cardTemplates[0]);
   const [customColor, setCustomColor] = useState(null);
   const [showColorPicker, setShowColorPicker] = useState(false);

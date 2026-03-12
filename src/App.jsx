@@ -11,6 +11,8 @@ import Preloader from './components/ui/Preloader'
 import HomePage from './pages/home/HomePage'
 import CardEditor from './pages/create/CardEditor'
 import CardSharePage from './pages/card/CardSharePage'
+import PricingPage from './pages/pricing/PricingPage'
+import AboutPage from './pages/about/AboutPage'
 import { ensureGuestSession } from './utils/guestSession'
 
 function LandingPage() {
@@ -65,6 +67,18 @@ export default function App() {
             <Route path="/sample-2" element={<LandingPage />} />
             <Route path="/create" element={
               <main><CardEditor /></main>
+            } />
+            <Route path="/pricing" element={
+              <>
+                <main><PricingPage /></main>
+                <Footer />
+              </>
+            } />
+            <Route path="/about" element={
+              <>
+                <main><AboutPage /></main>
+                <Footer />
+              </>
             } />
             <Route path="/card/:id" element={<CardSharePage />} />
           </Routes>
