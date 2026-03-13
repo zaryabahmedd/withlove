@@ -79,17 +79,16 @@ export default function Preloader({ onComplete }) {
             <img src={HERO_CARD} alt="Featured card" className={styles.heroImg} />
             <div className={styles.heroGlow} />
             <div className={styles.heroShine} />
+            {/* Brand logo */}
+            <motion.img
+              src="/WhatsApp_Image_2026-03-09_at_8.48.51_PM-removebg-preview.png"
+              alt="With Love"
+              className={styles.brandLogo}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.75, duration: 0.55, ease: 'easeOut' }}
+            />
           </motion.div>
-
-          {/* Brand logo */}
-          <motion.img
-            src="/With_Love_transparent_1767397236984-CNLkaJTe.png"
-            alt="With Love"
-            className={styles.brandLogo}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.75, duration: 0.55, ease: 'easeOut' }}
-          />
 
         </motion.div>
       )}
