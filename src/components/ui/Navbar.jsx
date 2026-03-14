@@ -7,7 +7,7 @@ import styles from './Navbar.module.css'
 
 const navLinks = [
   { label: 'Home', icon: null, to: '/' },
-  { label: 'Features', icon: null, href: '#gallery' },
+  { label: 'Features', icon: null, href: '#features' },
   { label: 'Why Choose Us', icon: null, href: '#why-choose-us' },
 ]
 

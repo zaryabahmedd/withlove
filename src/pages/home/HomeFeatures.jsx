@@ -328,7 +328,7 @@ export default function HomeFeatures() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className={styles.section} ref={ref}>
+    <section id="features" className={styles.section} ref={ref}>
       <div className={styles.inner}>
         <motion.div
           className={styles.header}
