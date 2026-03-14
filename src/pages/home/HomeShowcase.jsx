@@ -45,7 +45,7 @@ function MarqueeRow({ images, direction = 'left', duration = 40 }) {
 
 export default function HomeShowcase() {
   return (
-    <section className={styles.section}>
+    <section id="gallery" className={styles.section}>
       <div className={styles.header}>
         <motion.span
           className={styles.eyebrow}

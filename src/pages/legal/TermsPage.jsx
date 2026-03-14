@@ -1,10 +1,15 @@
+import { useEffect } from 'react'
 import styles from './LegalPage.module.css'
 
 export default function TermsPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className={styles.page}>
       <div className={styles.wrapper}>
-        <header className={styles.hero}>
+        <header id="terms" className={styles.hero}>
           <span className={styles.badge}>Terms</span>
           <h1 className={styles.title}>Terms and Conditions</h1>
           <p className={styles.updated}>Last updated: March 14, 2026</p>

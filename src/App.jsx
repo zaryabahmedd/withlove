@@ -11,11 +11,18 @@ import Preloader from './components/ui/Preloader'
 import HomePage from './pages/home/HomePage'
 import CardEditor from './pages/create/CardEditor'
 import CardSharePage from './pages/card/CardSharePage'
-import PricingPage from './pages/pricing/PricingPage'
 import AboutPage from './pages/about/AboutPage'
 import PrivacyPage from './pages/legal/PrivacyPage'
 import TermsPage from './pages/legal/TermsPage'
 import { ensureGuestSession } from './utils/guestSession'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 
 function LandingPage() {
   return (
@@ -52,6 +59,7 @@ export default function App() {
       <Preloader onComplete={() => setReady(true)} />
       {ready && (
         <>
+          <ScrollToTop />
           {!isCardSharePage && <Navbar isDark={isDark} toggleTheme={() => setIsDark(d => !d)} />}
           <Routes>
             <Route path="/" element={
@@ -69,12 +77,6 @@ export default function App() {
             <Route path="/sample-2" element={<LandingPage />} />
             <Route path="/create" element={
               <main><CardEditor /></main>
-            } />
-            <Route path="/pricing" element={
-              <>
-                <main><PricingPage /></main>
-                <Footer />
-              </>
             } />
             <Route path="/about" element={
               <>

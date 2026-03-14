@@ -6,9 +6,9 @@ import { ensureGuestSession } from '../../utils/guestSession'
 import styles from './Navbar.module.css'
 
 const navLinks = [
-  { label: 'Sample 2', icon: null, to: '/sample-2' },
-  { label: 'Features', icon: null, href: '#features' },
-  { label: 'Pricing', icon: null, to: '/pricing' },
+  { label: 'Home', icon: null, to: '/' },
+  { label: 'Features', icon: null, href: '#gallery' },
+  { label: 'Why Choose Us', icon: null, href: '#why-choose-us' },
 ]
 
 export default function Navbar({ isDark, toggleTheme }) {

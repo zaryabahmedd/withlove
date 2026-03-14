@@ -4,7 +4,6 @@ import styles from './Footer.module.css'
 
 const PRODUCT_LINKS = [
   { label: 'Create a Card', to: '/create' },
-  { label: 'Pricing', to: '/pricing' },
 ]
 
 const OCCASION_LINKS = [

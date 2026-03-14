@@ -1,10 +1,15 @@
+import { useEffect } from 'react'
 import styles from './LegalPage.module.css'
 
 export default function PrivacyPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className={styles.page}>
       <div className={styles.wrapper}>
-        <header className={styles.hero}>
+        <header id="privacy" className={styles.hero}>
           <span className={styles.badge}>Privacy</span>
           <h1 className={styles.title}>Privacy Policy</h1>
           <p className={styles.updated}>Last updated: March 14, 2026</p>

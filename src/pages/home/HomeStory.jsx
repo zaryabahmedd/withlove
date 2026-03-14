@@ -14,7 +14,7 @@ export default function HomeStory() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section className={styles.section} ref={ref}>
+    <section id="why-choose-us" className={styles.section} ref={ref}>
       <div className={styles.inner}>
         <div className={styles.grid}>
           {/* Left: Large typographic statement */}
@@ -38,7 +38,7 @@ export default function HomeStory() {
             transition={{ delay: 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className={styles.body}>
-              cardhazza was born from one belief: the people you love deserve more
+              With Love was born from one belief: the people you love deserve more
               than a four-word text. We built a space where your words, your warmth,
               and your personality arrive in one beautiful card — ready to open, save,
               and treasure forever.

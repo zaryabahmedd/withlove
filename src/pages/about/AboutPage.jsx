@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Heart, Users, Globe, Sparkles } from 'lucide-react'
@@ -43,6 +44,10 @@ const fadeUp = {
 }
 
 export default function AboutPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className={styles.page}>
       {/* Background elements */}
@@ -50,7 +55,7 @@ export default function AboutPage() {
       <div className={styles.bgBlob2} />
 
       {/* Hero section */}
-      <section className={styles.heroSection}>
+      <section id="our-story" className={styles.heroSection}>
         <motion.div
           className={styles.heroContent}
           initial="hidden"

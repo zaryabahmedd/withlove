@@ -198,6 +198,56 @@ function CardRender({ template, recipientName, senderName, message, occasion, me
   }
 
   /* ═══════════════════════════════
+     POLAROID  — photo-first memory
+  ═══════════════════════════════ */
+  if (template.style === "polaroid") {
+    const imgItem = media.find((m) => m.type === "image");
+    return (
+      <div style={wrap}>
+        <div
+          style={{ position:"relative", background:bg, borderRadius:"2px", minHeight:530, overflow:"hidden",
+            boxShadow:"0 24px 60px rgba(0,0,0,0.16), 0 6px 16px rgba(0,0,0,0.08)", transform:"rotate(0.8deg)" }}
+        >
+          {/* Photo frame */}
+          <div style={{ margin:"18px 18px 0", overflow:"hidden", borderRadius:"2px", background:"#f0e8d8",
+            aspectRatio:"4/3", display:"flex", alignItems:"center", justifyContent:"center" }}>
+            {imgItem ? (
+              <img src={imgItem.url} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
+            ) : (
+              <span style={{ fontSize:"3.5rem", lineHeight:1 }}>{occasion.emoji}</span>
+            )}
+          </div>
+
+          <div style={{ padding:"1rem 1.25rem 1.75rem", display:"flex", flexDirection:"column" }}>
+            <span style={{ alignSelf:"flex-start", display:"inline-block", padding:"3px 10px", borderRadius:"999px",
+              fontSize:"9px", fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase",
+              background:badgeBg, color:badgeText, marginBottom:"0.625rem" }}>
+              {occasion.label}
+            </span>
+
+            <h2 style={{ fontSize:"1.375rem", fontWeight:700, color:text, fontFamily:template.fontFamily, margin:"0 0 0.625rem", lineHeight:1.3 }}>
+              Dear {name} ♡
+            </h2>
+
+            {media.filter((m) => m.type !== "image").length > 0 && (
+              <MediaBlock media={media.filter((m) => m.type !== "image")} style="polaroid" />
+            )}
+
+            <p style={{ fontSize:"0.875rem", lineHeight:1.75, color:text, fontFamily:template.messageFontFamily, margin:"0 0 1rem", flex:1 }}>
+              {msg}
+            </p>
+
+            <p style={{ textAlign:"right", fontSize:"1.0625rem", color:accent,
+              fontFamily:"'Dancing Script','Segoe Script','Brush Script MT',cursive", lineHeight:1.2, margin:0 }}>
+              — {sender}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ═══════════════════════════════
      NEON  — cyberpunk glow
   ═══════════════════════════════ */
   if (template.style === "neon") {
@@ -265,19 +315,189 @@ function CardRender({ template, recipientName, senderName, message, occasion, me
     );
   }
 
-  /* Fallback: simple card for unknown templates */
+  /* ═══════════════════════════════
+     VINTAGE  — timeworn postcard
+  ═══════════════════════════════ */
+  if (template.style === "vintage") {
+    const bgFinal     = customColor ? customColor.bg     : "#F5E6C8";
+    const textFinal   = customColor ? customColor.text   : "#3D2B1F";
+    const accentFinal = customColor ? customColor.accent : "#8B4513";
+    return (
+      <div style={wrap}>
+        <div
+          style={{
+            position:"relative", background:bgFinal, minHeight:510, overflow:"hidden",
+            border:`8px solid rgba(139,69,19,0.10)`, outline:`1.5px solid ${accentFinal}18`,
+            boxShadow:`0 14px 50px rgba(91,41,0,0.20), 0 4px 12px rgba(0,0,0,0.08)`,
+          }}
+        >
+          {/* Aged vignette overlay */}
+          <div style={{ position:"absolute", inset:0, pointerEvents:"none", zIndex:0,
+            backgroundImage:`radial-gradient(ellipse at 15% 0%,rgba(139,69,19,0.07) 0%,transparent 55%), radial-gradient(ellipse at 85% 100%,rgba(139,69,19,0.09) 0%,transparent 55%)` }} />
+          {/* Double inner border */}
+          <div style={{ position:"absolute", inset:10, border:`1px solid ${accentFinal}22`, pointerEvents:"none", zIndex:1 }} />
+          <div style={{ position:"absolute", inset:16, border:`1px solid ${accentFinal}12`, pointerEvents:"none", zIndex:1 }} />
+          {/* Corner ornament stars */}
+          <div style={{ position:"absolute", top:18, left:18, fontSize:"14px", color:`${accentFinal}40`, userSelect:"none", pointerEvents:"none", zIndex:2, lineHeight:1 }}>✦</div>
+          <div style={{ position:"absolute", top:18, right:18, fontSize:"14px", color:`${accentFinal}40`, userSelect:"none", pointerEvents:"none", zIndex:2, lineHeight:1 }}>✦</div>
+          <div style={{ position:"absolute", bottom:18, left:18, fontSize:"14px", color:`${accentFinal}40`, userSelect:"none", pointerEvents:"none", zIndex:2, lineHeight:1 }}>✦</div>
+          <div style={{ position:"absolute", bottom:18, right:18, fontSize:"14px", color:`${accentFinal}40`, userSelect:"none", pointerEvents:"none", zIndex:2, lineHeight:1 }}>✦</div>
+          {/* Postal header */}
+          <div style={{ position:"relative", zIndex:3, padding:"0.875rem 1.375rem 0.625rem",
+            borderBottom:`1px dashed ${accentFinal}28`,
+            display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+            <span style={{ fontSize:"9px", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.22em",
+              color:`${accentFinal}65`, fontFamily:"'Courier New',monospace" }}>
+              PERSONAL CORRESPONDENCE
+            </span>
+            <span style={{ display:"inline-block", padding:"2px 8px",
+              border:`1.5px solid ${accentFinal}45`, fontSize:"9px", fontWeight:700,
+              textTransform:"uppercase", letterSpacing:"0.1em", color:accentFinal,
+              transform:"rotate(-2deg)" }}>
+              {occasion.label}
+            </span>
+          </div>
+          <div style={{ position:"relative", zIndex:3, display:"flex", flexDirection:"column", padding:"1.125rem 1.375rem 1.5rem" }}>
+            <h2 style={{ fontSize:"1.625rem", fontWeight:700, color:textFinal, fontFamily:template.fontFamily, margin:"0 0 0.875rem", lineHeight:1.3 }}>
+              My dearest {name},
+            </h2>
+            <MediaBlock media={media} />
+            <p style={{ fontSize:"0.875rem", lineHeight:2.0, color:textFinal, fontFamily:template.messageFontFamily, margin:"0 0 1.25rem", flex:1 }}>
+              {msg}
+            </p>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end" }}>
+              <div style={{ width:42, height:42, borderRadius:"50%",
+                background:`radial-gradient(circle at 35% 35%, ${accentFinal}EE, ${accentFinal}88)`,
+                display:"flex", alignItems:"center", justifyContent:"center",
+                boxShadow:`0 4px 12px ${accentFinal}40`, fontSize:"18px" }}>
+                {occasion.emoji}
+              </div>
+              <div style={{ textAlign:"right" }}>
+                <p style={{ fontSize:"9px", textTransform:"uppercase", letterSpacing:"0.15em",
+                  color:`${accentFinal}75`, margin:"0 0 3px", fontFamily:"'Courier New',monospace" }}>
+                  Yours sincerely,
+                </p>
+                <p style={{ fontSize:"1.25rem", fontStyle:"italic", fontWeight:700, color:textFinal, fontFamily:template.fontFamily, margin:0 }}>
+                  {sender}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ═══════════════════════════════
+     GRADIENT  — vivid & modern
+  ═══════════════════════════════ */
+  if (template.style === "gradient") {
+    const gradBg    = customColor
+      ? `linear-gradient(135deg, ${customColor.bg}, ${customColor.accent}88)`
+      : "linear-gradient(135deg, #667EEA 0%, #764BA2 32%, #F64F59 68%, #C471ED 100%)";
+    const textFinal = customColor ? customColor.text   : "#FFFFFF";
+    const goldLine  = customColor ? customColor.accent : "#FFD700";
+    return (
+      <div style={wrap}>
+        <div
+          style={{ position:"relative", background:gradBg, minHeight:520, overflow:"hidden",
+            borderRadius:"20px", boxShadow:"0 30px 80px rgba(102,126,234,0.35), 0 10px 30px rgba(0,0,0,0.15)" }}
+        >
+          {/* Bokeh blobs */}
+          <div style={{ position:"absolute", width:180, height:180, borderRadius:"50%",
+            background:"rgba(255,255,255,0.08)", top:-50, right:-40,
+            filter:"blur(22px)", pointerEvents:"none" }} />
+          <div style={{ position:"absolute", width:120, height:120, borderRadius:"50%",
+            background:"rgba(255,255,255,0.06)", bottom:20, left:-30,
+            filter:"blur(16px)", pointerEvents:"none" }} />
+          <div style={{ position:"absolute", width:80, height:80, borderRadius:"50%",
+            background:"rgba(255,215,0,0.12)", top:"40%", left:"60%",
+            filter:"blur(12px)", pointerEvents:"none" }} />
+          {/* Frosted glass panel */}
+          <div style={{ position:"relative", zIndex:1, margin:"1.375rem",
+            borderRadius:"14px",
+            background:"rgba(255,255,255,0.13)", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+            border:"1px solid rgba(255,255,255,0.22)",
+            padding:"1.625rem", display:"flex", flexDirection:"column",
+            boxShadow:"inset 0 1px 0 rgba(255,255,255,0.2)" }}>
+            <div style={{ marginBottom:"0.875rem", display:"flex", justifyContent:"center" }}>
+              <span style={{ display:"inline-flex", alignItems:"center", gap:"5px",
+                padding:"4px 13px", borderRadius:"999px",
+                fontSize:"10px", fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase",
+                background:"rgba(255,255,255,0.22)", color:textFinal,
+                border:"1px solid rgba(255,255,255,0.3)" }}>
+                {occasion.emoji} {occasion.label}
+              </span>
+            </div>
+            <h2 style={{ textAlign:"center", fontSize:"2rem", fontWeight:800, color:textFinal,
+              fontFamily:template.fontFamily, margin:"0 0 1.125rem", lineHeight:1.2,
+              textShadow:"0 2px 8px rgba(0,0,0,0.2)" }}>
+              For {name}
+            </h2>
+            <MediaBlock media={media} />
+            <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <p style={{ textAlign:"center", fontSize:"0.9375rem", lineHeight:1.85, color:textFinal,
+                fontFamily:template.messageFontFamily, margin:0,
+                textShadow:"0 1px 3px rgba(0,0,0,0.15)" }}>
+                {msg}
+              </p>
+            </div>
+            <div style={{ width:40, height:2, background:goldLine, margin:"1.125rem auto 0.875rem",
+              borderRadius:2, boxShadow:`0 0 12px ${goldLine}80` }} />
+            <p style={{ textAlign:"center", fontSize:"1.125rem", fontWeight:700, color:textFinal,
+              fontFamily:template.fontFamily, margin:0,
+              textShadow:"0 2px 8px rgba(0,0,0,0.2)" }}>
+              — {sender}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ═══════════════════════════════
+     BOLD  — typographic statement (default)
+  ═══════════════════════════════ */
   return (
     <div style={wrap}>
-      <div style={{ background:bg, color:text, borderRadius:"24px", padding:"2rem", minHeight:400 }}>
-        <div style={{ background:badgeBg, color:badgeText, display:"inline-block", padding:"5px 14px", borderRadius:"999px", fontSize:"10px", fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:"1rem" }}>
-          {occasion.emoji} {occasion.label}
-        </div>
-        <h2 style={{ fontFamily:template.fontFamily, fontSize:"1.9rem", margin:"0 0 1rem" }}>Dear {name}</h2>
-        <MediaBlock media={media} />
-        <p style={{ lineHeight:1.8, margin:"0 0 1.5rem" }}>{msg}</p>
-        <div style={{ borderTop:`1px solid ${accent}40`, paddingTop:"1rem" }}>
-          <p style={{ fontSize:"9px", textTransform:"uppercase", letterSpacing:"0.2em", color:accent, margin:"0 0 4px" }}>With love,</p>
-          <p style={{ fontFamily:template.fontFamily, fontSize:"1.25rem", fontWeight:700, margin:0 }}>{sender}</p>
+      <div
+        style={{ position:"relative", background:bg, minHeight:500, overflow:"hidden",
+          boxShadow:"0 24px 64px rgba(0,0,0,0.22), 0 6px 20px rgba(0,0,0,0.10)" }}
+      >
+        {/* Bold accent header bar */}
+        <div style={{ height:8, width:"100%", background:accent }} />
+
+        <div style={{ position:"relative", display:"flex", flexDirection:"column", minHeight:490, padding:"1.75rem" }}>
+          {/* Occasion badge */}
+          <span style={{ alignSelf:"flex-start", display:"inline-block", padding:"4px 10px", borderRadius:"2px",
+            fontSize:"9px", fontWeight:900, letterSpacing:"0.18em", textTransform:"uppercase",
+            background:accent, color:badgeText, marginBottom:"0.875rem" }}>
+            {occasion.emoji} {occasion.label}
+          </span>
+
+          {/* Big recipient name */}
+          <h2 style={{ fontSize:"3rem", fontWeight:900, textTransform:"uppercase", letterSpacing:"-0.025em", lineHeight:0.92,
+            color:text, fontFamily:template.fontFamily, margin:"0 0 1.5rem" }}>
+            {name}
+          </h2>
+
+          <MediaBlock media={media} />
+
+          {/* Message with quote marks */}
+          <div style={{ flex:1, display:"flex", alignItems:"center" }}>
+            <p style={{ fontSize:"1rem", lineHeight:1.7, color:text, fontFamily:template.messageFontFamily, margin:0 }}>
+              &ldquo;{msg}&rdquo;
+            </p>
+          </div>
+
+          {/* Signature row */}
+          <div style={{ marginTop:"1.5rem", paddingTop:"1.25rem", borderTop:`1.5px solid ${accent}30`, display:"flex", justifyContent:"space-between", alignItems:"flex-end" }}>
+            <div>
+              <p style={{ fontSize:"9px", fontWeight:900, textTransform:"uppercase", letterSpacing:"0.3em", color:accent, margin:"0 0 4px" }}>From</p>
+              <p style={{ fontSize:"1.5rem", fontWeight:900, textTransform:"uppercase", color:text, fontFamily:template.fontFamily, margin:0 }}>{sender}</p>
+            </div>
+            <span style={{ fontSize:"2.5rem", color:accent, lineHeight:1 }}>♥</span>
+          </div>
         </div>
       </div>
     </div>
