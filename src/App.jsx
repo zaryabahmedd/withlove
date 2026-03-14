@@ -13,6 +13,8 @@ import CardEditor from './pages/create/CardEditor'
 import CardSharePage from './pages/card/CardSharePage'
 import PricingPage from './pages/pricing/PricingPage'
 import AboutPage from './pages/about/AboutPage'
+import PrivacyPage from './pages/legal/PrivacyPage'
+import TermsPage from './pages/legal/TermsPage'
 import { ensureGuestSession } from './utils/guestSession'
 
 function LandingPage() {
@@ -77,6 +79,18 @@ export default function App() {
             <Route path="/about" element={
               <>
                 <main><AboutPage /></main>
+                <Footer />
+              </>
+            } />
+            <Route path="/privacy" element={
+              <>
+                <main><PrivacyPage /></main>
+                <Footer />
+              </>
+            } />
+            <Route path="/terms" element={
+              <>
+                <main><TermsPage /></main>
                 <Footer />
               </>
             } />

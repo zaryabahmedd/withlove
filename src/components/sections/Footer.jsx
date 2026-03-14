@@ -19,6 +19,11 @@ const COMPANY_LINKS = [
   { label: 'About Us', to: '/about' },
 ]
 
+const LEGAL_LINKS = [
+  { label: 'Privacy', to: '/privacy' },
+  { label: 'Terms & Conditions', to: '/terms' },
+]
+
 const SOCIALS = [
   {
     label: 'Instagram',
@@ -213,12 +218,12 @@ export default function Footer() {
         </p>
 
         <div className={styles.legalLinks}>
-          {['Privacy', 'Terms', 'Cookies'].map((item, i) => (
-            <span key={item} className={styles.legalItem}>
+          {LEGAL_LINKS.map((item, i) => (
+            <span key={item.label} className={styles.legalItem}>
               {i > 0 && <span className={styles.dot}>·</span>}
-              <motion.a href="#" className={styles.legalLink} whileHover={{ color: '#FF8CB0' }}>
-                {item}
-              </motion.a>
+              <Link to={item.to} className={styles.legalLink}>
+                {item.label}
+              </Link>
             </span>
           ))}
         </div>

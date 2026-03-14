@@ -1,0 +1,135 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fff8f6 0%, #ffffff 36%, #fff7f0 100%);
+  padding: 8.5rem 1.5rem 4rem;
+}
+
+.wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 64, 87, 0.2);
+  background: rgba(245, 64, 87, 0.08);
+  color: #f54057;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #1f1f21;
+}
+
+.updated {
+  margin: 0.75rem 0 0;
+  color: rgba(31, 31, 33, 0.58);
+  font-size: 0.95rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+}
+
+.section {
+  margin-bottom: 1.8rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.section h2 {
+  margin: 0 0 0.65rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: #1f1f21;
+}
+
+.section p {
+  margin: 0 0 0.8rem;
+  color: rgba(31, 31, 33, 0.78);
+  line-height: 1.8;
+}
+
+.section ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.15rem;
+}
+
+.section li {
+  margin: 0 0 0.5rem;
+  color: rgba(31, 31, 33, 0.78);
+  line-height: 1.7;
+}
+
+.contact {
+  color: #f54057;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.contact:hover {
+  text-decoration: underline;
+}
+
+:global([data-theme='dark']) .page {
+  background: linear-gradient(180deg, #100c0d 0%, #121214 36%, #0f0d0a 100%);
+}
+
+:global([data-theme='dark']) .badge {
+  border-color: rgba(245, 64, 87, 0.35);
+  background: rgba(245, 64, 87, 0.15);
+}
+
+:global([data-theme='dark']) .title {
+  color: #faf7f4;
+}
+
+:global([data-theme='dark']) .updated {
+  color: rgba(250, 247, 244, 0.65);
+}
+
+:global([data-theme='dark']) .card {
+  background: rgba(18, 18, 20, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+:global([data-theme='dark']) .section h2 {
+  color: #faf7f4;
+}
+
+:global([data-theme='dark']) .section p,
+:global([data-theme='dark']) .section li {
+  color: rgba(250, 247, 244, 0.8);
+}
+
+@media (max-width: 680px) {
+  .page {
+    padding: 7.5rem 1rem 3rem;
+  }
+
+  .card {
+    border-radius: 18px;
+    padding: 1.4rem;
+  }
+}
