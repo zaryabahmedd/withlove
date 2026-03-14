@@ -188,13 +188,6 @@ export default function Footer() {
               </motion.a>
             ))}
           </div>
-          <motion.a
-            href="mailto:hello@cardhazza.com"
-            className={styles.contactEmail}
-            whileHover={{ color: '#FF8CB0' }}
-          >
-            hello@cardhazza.com
-          </motion.a>
         </motion.div>
       </div>
 
