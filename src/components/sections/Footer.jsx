@@ -17,7 +17,6 @@ const OCCASION_LINKS = [
 
 const COMPANY_LINKS = [
   { label: 'About Us', to: '/about' },
-  { label: 'Blog', to: '#' },
 ]
 
 const SOCIALS = [
@@ -79,8 +78,8 @@ export default function Footer() {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
           <img
-            src="/With_Love_transparent_1767397236984-CNLkaJTe.png"
-            alt="cardhazza"
+            src="/WhatsApp_Image_2026-03-09_at_8.48.51_PM-removebg-preview.png"
+            alt="With Love"
             className={styles.brandLogo}
           />
           <p className={styles.brandTagline}>

@@ -173,6 +173,10 @@
   margin: 0.5rem 0;
 }
 
+.mediaSectionCompact {
+  gap: 0.5rem;
+}
+
 .mediaItem {
   display: flex;
   justify-content: center;
@@ -193,6 +197,15 @@
   border-radius: 12px;
   border: 2px solid;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* When multiple media items are present, shrink each one */
+.mediaSectionCompact .mediaImage {
+  max-height: 160px;
+}
+
+.mediaSectionCompact .mediaVideo {
+  max-height: 180px;
 }
 
 .audioWrapper {

@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ImageIcon, Video, Camera, Mic, ChevronDown, ChevronUp,
-  Send, Copy, Check, X, ArrowLeft, Users, Sparkles,
+  Send, Copy, Check, X, ArrowLeft, Sparkles,
   Eye, Heart, Square, Palette, Loader2,
 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -564,8 +564,8 @@ export default function CardEditor() {
   const [selectedTemplate, setSelectedTemplate] = useState(cardTemplates[0]);
   const [customColor, setCustomColor] = useState(null);
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const [sendToMultiple, setSendToMultiple] = useState(false);
-  const [showMoreOptions, setShowMoreOptions] = useState(false);
+  const [screenBgColor, setScreenBgColor] = useState(null);
+  const [showScreenBgPicker, setShowScreenBgPicker] = useState(false);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
   const [showVoiceOptions, setShowVoiceOptions] = useState(false);
   const [isRecordingVoice, setIsRecordingVoice] = useState(false);
@@ -575,6 +575,8 @@ export default function CardEditor() {
 
   const [uploadedMedia, setUploadedMedia] = useState([]);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showCreatingModal, setShowCreatingModal] = useState(false);
+  const [createCountdown, setCreateCountdown] = useState(5);
   const [shareLink, setShareLink] = useState("");
   const [copied, setCopied] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -602,55 +604,74 @@ export default function CardEditor() {
 
   const handleSend = async () => {
     setIsUploading(true);
+    setShowCreatingModal(true);
+    setCreateCountdown(5);
+
+    let countdownInterval = null;
+    countdownInterval = setInterval(() => {
+      setCreateCountdown((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
     try {
-      const id = generateCardId();
+      const createCardPromise = (async () => {
+        const id = generateCardId();
 
-      // Upload all media files to Supabase storage
-      const uploadedUrls = [];
-      for (const item of uploadedMedia) {
-        let publicUrl = null;
+        // Upload all media files to Supabase storage
+        const uploadedUrls = [];
+        for (const item of uploadedMedia) {
+          let publicUrl = null;
 
-        if (item.file instanceof File) {
-          publicUrl = await uploadMedia(item.file, id);
-        } else if (item.url?.startsWith('blob:')) {
-          // Fallback for older in-memory media items without a stored File object.
-          const file = await blobUrlToFile(item.url, item.name || `media.${item.type === 'image' ? 'jpg' : item.type === 'video' ? 'webm' : 'webm'}`);
-          if (file) {
-            publicUrl = await uploadMedia(file, id);
+          if (item.file instanceof File) {
+            publicUrl = await uploadMedia(item.file, id);
+          } else if (item.url?.startsWith('blob:')) {
+            // Fallback for older in-memory media items without a stored File object.
+            const file = await blobUrlToFile(item.url, item.name || `media.${item.type === 'image' ? 'jpg' : item.type === 'video' ? 'webm' : 'webm'}`);
+            if (file) {
+              publicUrl = await uploadMedia(file, id);
+            }
+          } else if (item.url) {
+            // Already a public URL
+            publicUrl = item.url;
           }
-        } else if (item.url) {
-          // Already a public URL
-          publicUrl = item.url;
+
+          if (publicUrl) {
+            uploadedUrls.push({ type: item.type, url: publicUrl, name: item.name });
+          }
         }
 
-        if (publicUrl) {
-          uploadedUrls.push({ type: item.type, url: publicUrl, name: item.name });
+        const payload = makeSharePayload({
+          cardId: id,
+          recipientName,
+          senderName,
+          message,
+          occasionValue: occasion.value,
+          templateId: selectedTemplate.id,
+          customColor,
+          screenBgColor,
+          media: uploadedUrls,
+        });
+
+        const success = await saveSharedCard(id, payload);
+        if (!success) {
+          console.error('Failed to save card to database');
         }
-      }
 
-      const payload = makeSharePayload({
-        cardId: id,
-        recipientName,
-        senderName,
-        message,
-        occasionValue: occasion.value,
-        templateId: selectedTemplate.id,
-        customColor,
-        media: uploadedUrls,
-      });
+        return buildShareLink(id);
+      })();
 
-      const success = await saveSharedCard(id, payload);
-      if (!success) {
-        console.error('Failed to save card to database');
-      }
+      const minWaitPromise = new Promise((resolve) => setTimeout(resolve, 5000));
+      const [link] = await Promise.all([createCardPromise, minWaitPromise]);
 
-      const link = buildShareLink(id);
       setShareLink(link);
+      setShowCreatingModal(false);
       setShowShareModal(true);
     } catch (err) {
       console.error('Error creating card:', err);
+      setShowCreatingModal(false);
     } finally {
+      if (countdownInterval) clearInterval(countdownInterval);
       setIsUploading(false);
+      setCreateCountdown(5);
     }
   };
 
@@ -802,6 +823,10 @@ export default function CardEditor() {
             {/* Template selector */}
             <div className={styles.formGroupLg}>
               <label className={styles.sectionLabel}>Choose a style</label>
+              <p className={styles.styleHelper}>
+                <span className={styles.helperDesktop}>Scroll styles, then check the live preview on the right.</span>
+                <span className={styles.helperMobile}>Swipe styles, the live preview updates right below.</span>
+              </p>
               <div className={styles.templateScroll}>
                 {cardTemplates.map((tmpl) => (
                   <button
@@ -829,6 +854,23 @@ export default function CardEditor() {
                     )}
                   </button>
                 ))}
+              </div>
+
+              {/* Mobile inline preview - shown directly after style selection */}
+              <div className={styles.mobileInlinePreview} style={screenBgColor ? { background: screenBgColor } : undefined}>
+                <div className={styles.mobileInlinePreviewLabel} style={screenBgColor && (screenBgColor.startsWith('#0') || screenBgColor.startsWith('#1') || screenBgColor.startsWith('#4c')) ? { color: 'rgba(255,255,255,0.35)' } : undefined}>Live Preview</div>
+                <CardPreview
+                  template={selectedTemplate}
+                  recipientName={recipientName}
+                  senderName={senderName}
+                  message={message}
+                  occasion={occasion}
+                  media={uploadedMedia}
+                  customColor={customColor}
+                />
+                <div className={styles.mobileInlinePreviewCaption}>
+                  {selectedTemplate.name} · {selectedTemplate.description}
+                </div>
               </div>
             </div>
 
@@ -897,25 +939,74 @@ export default function CardEditor() {
               </AnimatePresence>
             </div>
 
+            {/* Screen background customization */}
+            <div className={styles.formGroupLg}>
+              <button onClick={() => setShowScreenBgPicker(!showScreenBgPicker)} className={styles.collapseBtn}>
+                <span className={styles.collapseBtnLeft}>
+                  <Palette />
+                  <span>Screen background</span>
+                </span>
+                <span className={styles.collapseBtnRight}>
+                  {screenBgColor && (
+                    <span className={styles.colorDot} style={{ backgroundColor: screenBgColor }} />
+                  )}
+                  <ChevronDown style={{ transform: showScreenBgPicker ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                </span>
+              </button>
+              <AnimatePresence>
+                {showScreenBgPicker && (
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden' }}>
+                    <div className={styles.colorPanel}>
+                      <p className={styles.colorPanelLabel}>Preset backgrounds</p>
+                      <div className={styles.screenBgGrid}>
+                        {[
+                          { name: 'Cream', color: '#fffdf5' },
+                          { name: 'Blush', color: '#fff0f3' },
+                          { name: 'Sky', color: '#f0f9ff' },
+                          { name: 'Mint', color: '#f0fdf4' },
+                          { name: 'Lavender', color: '#faf5ff' },
+                          { name: 'Peach', color: '#fff7ed' },
+                          { name: 'Slate', color: '#f1f5f9' },
+                          { name: 'Charcoal', color: '#1f2937' },
+                          { name: 'Midnight', color: '#0f172a' },
+                          { name: 'Wine', color: '#4c1d32' },
+                          { name: 'Forest', color: '#14352b' },
+                          { name: 'Ocean', color: '#0c3d5c' },
+                        ].map((preset) => (
+                          <button
+                            key={preset.name}
+                            onClick={() => setScreenBgColor(preset.color)}
+                            className={`${styles.screenBgBtn} ${screenBgColor === preset.color ? styles.active : ''}`}
+                            style={{ backgroundColor: preset.color }}
+                            title={preset.name}
+                          >
+                            {screenBgColor === preset.color && <Check style={{ width: 14, height: 14, color: preset.color.startsWith('#0') || preset.color.startsWith('#1') || preset.color.startsWith('#4c') ? '#fff' : '#333' }} />}
+                          </button>
+                        ))}
+                      </div>
+                      <p className={styles.colorPanelLabel}>Custom color</p>
+                      <div className={styles.colorRow}>
+                        <div className={styles.colorInputWrap} style={{ flex: 1 }}>
+                          <div className={styles.colorInputBox}>
+                            <input type="color" value={screenBgColor || "#fffdf5"} onChange={(e) => setScreenBgColor(e.target.value)} />
+                            <span>{screenBgColor || "#fffdf5"}</span>
+                          </div>
+                        </div>
+                      </div>
+                      {screenBgColor && (
+                        <button onClick={() => setScreenBgColor(null)} className={styles.resetBtn}>
+                          Reset to default
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {/* Recipient */}
             <div className={styles.formGroup}>
               <label className={styles.sectionLabel}>Who will receive this gift?</label>
-              <div className={styles.toggleRow}>
-                <span className={styles.toggleRowLabel}>
-                  <Users />
-                  <span>Send to multiple people</span>
-                </span>
-                <button
-                  onClick={() => setSendToMultiple(!sendToMultiple)}
-                  className={`${styles.toggleSwitch} ${sendToMultiple ? styles.on : styles.off}`}
-                >
-                  <motion.div
-                    style={{ position: 'absolute', top: 2, width: 20, height: 20, borderRadius: '50%', background: '#fff', boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}
-                    animate={{ left: sendToMultiple ? 22 : 2 }}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
-                </button>
-              </div>
               <input
                 type="text"
                 placeholder="Their name"
@@ -1034,47 +1125,6 @@ export default function CardEditor() {
               />
             </div>
 
-            {/* More options */}
-            <div className={styles.formGroup}>
-              <button onClick={() => setShowMoreOptions(!showMoreOptions)} className={styles.moreOptionsBtn}>
-                {showMoreOptions ? <ChevronUp /> : <ChevronDown />}
-                More options
-              </button>
-              <AnimatePresence>
-                {showMoreOptions && (
-                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden' }}>
-                    <div className={styles.moreOptionsPanel}>
-                      <div className={styles.optionCard}>
-                        <p className={styles.optionCardLabel}>Schedule delivery</p>
-                        <input type="datetime-local" className={styles.optionCardInput} />
-                      </div>
-                      <div className={styles.optionCard}>
-                        <p className={styles.optionCardLabel}>Add a calendar event</p>
-                        <input type="text" placeholder="Event name (optional)" className={styles.optionCardInput} />
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Mobile inline preview */}
-            <div className={styles.mobileInlinePreview}>
-              <div className={styles.mobileInlinePreviewLabel}>Live Preview</div>
-              <CardPreview
-                template={selectedTemplate}
-                recipientName={recipientName}
-                senderName={senderName}
-                message={message}
-                occasion={occasion}
-                media={uploadedMedia}
-                customColor={customColor}
-              />
-              <div className={styles.mobileInlinePreviewCaption}>
-                {selectedTemplate.name} · {selectedTemplate.description}
-              </div>
-            </div>
-
             {/* Mobile preview toggle */}
             <button onClick={() => setShowMobilePreview(true)} className={styles.mobilePreviewBtn}>
               <Eye />
@@ -1086,12 +1136,12 @@ export default function CardEditor() {
               {isUploading ? (
                 <>
                   <Loader2 style={{ animation: 'spin 1s linear infinite' }} />
-                  <span>Creating card...</span>
+                  <span>Creating...</span>
                 </>
               ) : (
                 <>
                   <Heart style={{ fill: 'rgba(255,255,255,0.3)' }} />
-                  <span>Send with love</span>
+                  <span>Create Now</span>
                   <motion.span style={{ marginLeft: 4 }} animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
                 </>
               )}
@@ -1100,13 +1150,9 @@ export default function CardEditor() {
         </div>
 
         {/* ───────── RIGHT PANEL: LIVE PREVIEW ───────── */}
-        <div className={styles.previewPanel}>
+        <div className={styles.previewPanel} style={screenBgColor ? { background: screenBgColor } : undefined}>
           <div className={styles.previewTopBar}>
-            <div className={styles.previewLabel}>✦ Live Preview</div>
-            <button className={styles.previewEntranceBtn}>
-              <Eye />
-              Preview entrance
-            </button>
+            <div className={styles.previewLabel} style={screenBgColor && (screenBgColor.startsWith('#0') || screenBgColor.startsWith('#1') || screenBgColor.startsWith('#4c')) ? { color: 'rgba(255,255,255,0.35)' } : undefined}>✦ Live Preview</div>
           </div>
           <CardPreview
             template={selectedTemplate}
@@ -1117,7 +1163,7 @@ export default function CardEditor() {
             media={uploadedMedia}
             customColor={customColor}
           />
-          <div className={styles.previewCaption}>{selectedTemplate.name} · {selectedTemplate.description}</div>
+          <div className={styles.previewCaption} style={screenBgColor && (screenBgColor.startsWith('#0') || screenBgColor.startsWith('#1') || screenBgColor.startsWith('#4c')) ? { color: 'rgba(255,255,255,0.22)' } : undefined}>{selectedTemplate.name} · {selectedTemplate.description}</div>
         </div>
       </div>
 
@@ -1176,6 +1222,24 @@ export default function CardEditor() {
 
       {/* ───────── SHARE MODAL ───────── */}
       <AnimatePresence>
+        {showCreatingModal && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={styles.overlay}>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 16 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 16 }}
+              className={styles.creatingModal}
+            >
+              <div className={styles.creatingLoader}>
+                <Loader2 />
+              </div>
+              <h3 className={styles.creatingTitle}>Please wait</h3>
+              <p className={styles.creatingSubtitle}>Preparing your card link...</p>
+              <div className={styles.creatingTimer}>{createCountdown}s</div>
+            </motion.div>
+          </motion.div>
+        )}
+
         {showShareModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={styles.overlay}>
             <motion.div initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }} className={styles.shareModal}>
@@ -1184,7 +1248,7 @@ export default function CardEditor() {
               </button>
               <div className={styles.shareModalCenter}>
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.2 }} className={styles.shareIconCircle}>
-                  <Sparkles />
+                  <img src="/WhatsApp_Image_2026-03-09_at_8.48.51_PM-removebg-preview.png" alt="With Love" className={styles.shareLogoImg} />
                 </motion.div>
                 <h3 className={styles.shareTitle}>Your card is ready! 🎉</h3>
                 <p className={styles.shareSubtitle}>Share this link with your special someone. It will expire in 30 days.</p>
