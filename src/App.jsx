@@ -39,7 +39,10 @@ function LandingPage() {
 }
 
 export default function App() {
-  const [ready, setReady] = useState(false)
+  const location = useLocation()
+  const isCardSharePage = location.pathname.startsWith('/card/')
+  
+  const [ready, setReady] = useState(isCardSharePage) // Skip preloader for card share pages
   const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark')
 
   useEffect(() => {
@@ -51,12 +54,9 @@ export default function App() {
     ensureGuestSession()
   }, [])
 
-  const location = useLocation()
-  const isCardSharePage = location.pathname.startsWith('/card/')
-
   return (
     <>
-      <Preloader onComplete={() => setReady(true)} />
+      {!isCardSharePage && <Preloader onComplete={() => setReady(true)} />}
       {ready && (
         <>
           <ScrollToTop />
