@@ -227,3 +227,231 @@
 :global([data-theme='dark']) .mediaVideo {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
+
+/* ═══════════════════════════════════════════
+   ENVELOPE OPENING ANIMATION
+═══════════════════════════════════════════ */
+
+.envelopeScene {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+/* Envelope container */
+.envelope {
+  position: absolute;
+  width: 320px;
+  height: 220px;
+  bottom: 120px;
+  z-index: 10;
+  animation: envelopeAppear 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.envelopeFade {
+  opacity: 0;
+  transform: scale(0.85) translateY(40px);
+}
+
+/* Triangular flap (top lid) */
+.envelopeFlap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 110px solid #d4a87c;
+  z-index: 12;
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 0.6s cubic-bezier(0.45, 0.05, 0.24, 1.2);
+}
+
+.flapOpen {
+  transform: rotateX(180deg);
+}
+
+/* Shadow under the flap */
+.envelopeFlapBack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 110px solid #c9976a;
+  z-index: 5;
+}
+
+/* Envelope body (front face) */
+.envelopeBody {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(175deg, #e8c9a0 0%, #dbb88a 50%, #d4a87c 100%);
+  border-radius: 4px 4px 12px 12px;
+  z-index: 8;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Inner fold lines on the envelope body */
+.envelopeInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.envelopeInner::before,
+.envelopeInner::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 0;
+  border-bottom: 110px solid rgba(180, 140, 90, 0.15);
+}
+
+.envelopeInner::before {
+  left: 0;
+  border-right: 160px solid transparent;
+}
+
+.envelopeInner::after {
+  right: 0;
+  border-left: 160px solid transparent;
+}
+
+.envelopeHeart {
+  font-size: 2rem;
+  z-index: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
+}
+
+.envelopeLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: #8b6b4a;
+  z-index: 1;
+}
+
+/* Card element that rises out of the envelope */
+.cardRise {
+  position: absolute;
+  width: 100%;
+  max-width: 380px;
+  bottom: 140px;
+  z-index: 7;
+  transform: translateY(0) scale(0.7);
+  opacity: 0;
+  transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.cardRiseUp {
+  transform: translateY(-220px) scale(0.85);
+  opacity: 1;
+}
+
+/* Final card wrapper fade in */
+.wrapperFadeIn {
+  animation: cardSettle 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Keyframes */
+@keyframes envelopeAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cardSettle {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dark theme adjustments */
+:global([data-theme='dark']) .envelopeFlap {
+  border-top-color: #6b5240;
+}
+
+:global([data-theme='dark']) .envelopeFlapBack {
+  border-top-color: #5a4435;
+}
+
+:global([data-theme='dark']) .envelopeBody {
+  background: linear-gradient(175deg, #7a6350 0%, #6b5240 50%, #5a4435 100%);
+}
+
+:global([data-theme='dark']) .envelopeLabel {
+  color: #c9b89a;
+}
+
+:global([data-theme='dark']) .envelopeInner::before,
+:global([data-theme='dark']) .envelopeInner::after {
+  border-bottom-color: rgba(90, 68, 53, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .envelopeScene {
+    max-width: 100%;
+    height: 520px;
+  }
+
+  .envelope {
+    width: 260px;
+    height: 180px;
+    bottom: 100px;
+  }
+
+  .envelopeFlap {
+    border-left-width: 130px;
+    border-right-width: 130px;
+    border-top-width: 90px;
+  }
+
+  .envelopeFlapBack {
+    border-left-width: 130px;
+    border-right-width: 130px;
+    border-top-width: 90px;
+  }
+
+  .cardRise {
+    max-width: 320px;
+    bottom: 110px;
+  }
+
+  .cardRiseUp {
+    transform: translateY(-180px) scale(0.8);
+  }
+}

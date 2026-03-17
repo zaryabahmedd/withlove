@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { cardOccasions, cardTemplates } from '../create/card-templates'
 import { getCardData } from '../../utils/cardShare'
@@ -562,9 +562,58 @@ export default function CardSharePage() {
   const template = cardTemplates.find((t) => t.id === payload.templateId) || cardTemplates[0]
   const occasion = cardOccasions.find((o) => o.value === payload.occasionValue) || cardOccasions[0]
 
+  /* ─── Envelope animation state ─── */
+  const [animPhase, setAnimPhase] = useState('envelope') // 'envelope' → 'opening' → 'card-rise' → 'done'
+
+  useEffect(() => {
+    if (status !== 'ok') return
+    const t1 = setTimeout(() => setAnimPhase('opening'), 800)
+    const t2 = setTimeout(() => setAnimPhase('card-rise'), 1600)
+    const t3 = setTimeout(() => setAnimPhase('done'), 2600)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [status])
+
+  const accent = payload.customColor?.accent || template.accentColor || '#f54057'
+
+  if (animPhase !== 'done') {
+    return (
+      <main className={styles.page} style={payload.screenBgColor ? { background: payload.screenBgColor } : undefined}>
+        <div className={styles.envelopeScene}>
+          {/* Envelope body */}
+          <div className={`${styles.envelope} ${animPhase === 'card-rise' ? styles.envelopeFade : ''}`}>
+            {/* Flap (triangle lid) */}
+            <div className={`${styles.envelopeFlap} ${animPhase === 'opening' || animPhase === 'card-rise' ? styles.flapOpen : ''}`} />
+            {/* Flap back (visible when flap is open) */}
+            <div className={styles.envelopeFlapBack} />
+            {/* Envelope body front */}
+            <div className={styles.envelopeBody}>
+              <div className={styles.envelopeInner}>
+                <span className={styles.envelopeHeart} style={{ color: accent }}>&#10084;</span>
+                <span className={styles.envelopeLabel}>With Love</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Card rising out */}
+          <div className={`${styles.cardRise} ${animPhase === 'card-rise' ? styles.cardRiseUp : ''}`}>
+            <CardRender
+              template={template}
+              recipientName={payload.recipientName}
+              senderName={payload.senderName}
+              message={payload.message}
+              occasion={occasion}
+              media={payload.media}
+              customColor={payload.customColor}
+            />
+          </div>
+        </div>
+      </main>
+    )
+  }
+
   return (
     <main className={styles.page} style={payload.screenBgColor ? { background: payload.screenBgColor } : undefined}>
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} ${styles.wrapperFadeIn}`}>
         <p className={styles.meta} style={payload.screenBgColor && (payload.screenBgColor.startsWith('#0') || payload.screenBgColor.startsWith('#1') || payload.screenBgColor.startsWith('#4c')) ? { color: 'rgba(255,255,255,0.6)' } : undefined}>
           Shared with love
         </p>
