@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { cardOccasions, cardTemplates } from '../create/card-templates'
 import { getCardData } from '../../utils/cardShare'
 import styles from './CardSharePage.module.css'
@@ -504,10 +505,161 @@ function CardRender({ template, recipientName, senderName, message, occasion, me
   );
 }
 
+/* ─── REVEAL ANIMATION ─── */
+const BURST_IMAGES = [
+  '/1067w-GBL7tdP2B-A.jpg',
+  '/900w-k6aGrISoRDo.webp',
+  '/1067w-Rycs9qLPNBk.jpg',
+  '/1067w-y9lMGm8uw8A.webp',
+  '/1131w-Dh_rbXRZuz4.webp',
+  '/1135w-ad8cLUg1kJY.webp',
+  '/1135w-AxrG3hmgGM0.webp',
+  '/1135w-c0BaBWV_t4M.jpg',
+  '/1135w-GYwkzrNrC-Y.webp',
+  '/1135w-Mny9fIUaPP8.webp',
+  '/1135w-mLorQish-ds.webp',
+  '/1135w-N7NUFrSikUk.webp',
+  '/1135w-pZfvJM8K0TI.jpg',
+  '/1135w-SBcw_sc90lA.webp',
+  '/1135w-stb19GP9PDo.webp',
+  '/1135w-Z282cJuUc5o.webp',
+  '/1067w-LoPZ7qsO0pY.webp',
+]
+
+/* Each card lands center-screen with a slight random rotation for a stacked pile feel */
+const CARD_ROTATIONS = [-6, 4, -3, 7, -2, 5, -8, 3, -4, 6, -1, 8, -5, 2, -7, 4, 0]
+
+function CardRevealAnimation({ onComplete, dataLoaded }) {
+  const [phase, setPhase] = useState('burst')
+  const timers = useRef([])
+  const onCompleteRef = useRef(onComplete)
+  onCompleteRef.current = onComplete
+  const lastIdx = BURST_IMAGES.length - 1
+
+  useEffect(() => {
+    const totalBurstTime = lastIdx * 55 + 450
+    /* After burst finishes, cards slide down revealing the logo */
+    timers.current.push(setTimeout(() => setPhase('slide'), totalBurstTime + 500))
+    /* 2 second delay with logo visible, then split the screen */
+    timers.current.push(setTimeout(() => setPhase('readySplit'), totalBurstTime + 500 + 800 + 2000))
+    return () => timers.current.forEach(clearTimeout)
+  }, [lastIdx])
+
+  useEffect(() => {
+    if (phase === 'readySplit' && dataLoaded) setPhase('split')
+  }, [phase, dataLoaded])
+
+  useEffect(() => {
+    if (phase === 'split') {
+      const t = setTimeout(() => { setPhase('done'); onCompleteRef.current() }, 800)
+      return () => clearTimeout(t)
+    }
+  }, [phase])
+
+  if (phase === 'done') return null
+
+  const isSplitting = phase === 'split'
+  const cardsVisible = phase === 'burst' || phase === 'slide' || phase === 'readySplit'
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+  const bg = isDark ? '#0d0a0b' : '#ffffff'
+
+  const getCardAnimate = (i) => {
+    const rot = CARD_ROTATIONS[i % CARD_ROTATIONS.length]
+
+    if (phase === 'burst') {
+      return { scale: 1, opacity: 1, rotate: rot, y: 0 }
+    }
+    /* slide / readySplit — ALL cards slide down together to reveal logo */
+    return { scale: 0.9, opacity: 0, rotate: 0, y: '65vh' }
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 9999, overflow: 'hidden' }}>
+      {/* Top half */}
+      <motion.div
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '50.1%', background: bg, zIndex: 3 }}
+        animate={{ y: isSplitting ? '-100%' : '0%' }}
+        transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+      >
+        <div style={{ position: 'absolute', top: -80, left: -120, width: 650, height: 650, borderRadius: '50%',
+          background: isDark
+            ? 'radial-gradient(circle at 45% 45%, rgba(245,64,87,0.10) 0%, rgba(253,167,30,0.06) 45%, transparent 70%)'
+            : 'radial-gradient(circle at 45% 45%, rgba(245,64,87,0.22) 0%, rgba(253,167,30,0.16) 45%, transparent 70%)',
+          pointerEvents: 'none' }} />
+      </motion.div>
+
+      {/* Bottom half */}
+      <motion.div
+        style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '50.1%', background: bg, zIndex: 3 }}
+        animate={{ y: isSplitting ? '100%' : '0%' }}
+        transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+      >
+        <div style={{ position: 'absolute', bottom: -60, right: -80, width: 500, height: 500, borderRadius: '50%',
+          background: isDark
+            ? 'radial-gradient(circle at 55% 55%, rgba(253,167,30,0.08) 0%, rgba(245,64,87,0.05) 50%, transparent 70%)'
+            : 'radial-gradient(circle at 55% 55%, rgba(253,167,30,0.2) 0%, rgba(245,64,87,0.1) 50%, transparent 70%)',
+          pointerEvents: 'none' }} />
+      </motion.div>
+
+      {/* Logo with circular background — revealed when cards slide down, moves up with top half on split */}
+      <motion.div
+        style={{
+          position: 'absolute', top: '50%', left: '50%',
+          width: 140, height: 140, marginLeft: -70, marginTop: -70,
+          borderRadius: '50%', background: '#ECE7E3',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+          zIndex: 4, pointerEvents: 'none',
+        }}
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={{
+          opacity: (phase === 'slide' || phase === 'readySplit') ? 1 : isSplitting ? 1 : 0,
+          scale: (phase === 'slide' || phase === 'readySplit') ? 1 : isSplitting ? 1 : 0.7,
+          y: isSplitting ? '-50vh' : 0,
+        }}
+        transition={{
+          opacity: { duration: 0.4 },
+          scale: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+          y: { duration: 0.7, ease: [0.76, 0, 0.24, 1] },
+        }}
+      >
+        <img
+          src="/WhatsApp_Image_2026-03-09_at_8.48.51_PM-removebg-preview.png"
+          alt="With Love"
+          style={{ width: 100, height: 100, objectFit: 'contain' }}
+        />
+      </motion.div>
+
+      {/* Stacked cards — all centered, one on top of the other */}
+      {cardsVisible && BURST_IMAGES.map((src, i) => (
+        <motion.div
+          key={src}
+          style={{
+            position: 'absolute', top: '50%', left: '50%',
+            width: 230, height: 310, marginLeft: -115, marginTop: -155,
+            borderRadius: 10, overflow: 'hidden',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.22)', zIndex: 2 + i,
+          }}
+          initial={{ scale: 0, opacity: 0, rotate: 0, y: 80 }}
+          animate={getCardAnimate(i)}
+          transition={{
+            delay: phase === 'burst' ? i * 0.055 : (lastIdx - i) * 0.03,
+            duration: phase === 'burst' ? 0.4 : 0.6,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} draggable={false} />
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
 export default function CardSharePage() {
   const { id } = useParams()
   const [status, setStatus] = useState('loading')
   const [payload, setPayload] = useState(null)
+  const [revealed, setRevealed] = useState(false)
 
   useEffect(() => {
     async function fetchCard() {
@@ -518,19 +670,11 @@ export default function CardSharePage() {
     fetchCard()
   }, [id])
 
-  if (status === 'loading') {
-    return (
-      <main className={styles.page}>
-        <div className={styles.stateCard}>
-          <div className={styles.loader} />
-          <p>Loading your card...</p>
-        </div>
-      </main>
-    )
-  }
+  const dataLoaded = status !== 'loading'
 
+  let content = null
   if (status === 'missing') {
-    return (
+    content = (
       <main className={styles.page}>
         <div className={styles.stateCard}>
           <h1>This card link is invalid</h1>
@@ -542,10 +686,8 @@ export default function CardSharePage() {
         </div>
       </main>
     )
-  }
-
-  if (status === 'expired') {
-    return (
+  } else if (status === 'expired') {
+    content = (
       <main className={styles.page}>
         <div className={styles.stateCard}>
           <h1>This card has expired</h1>
@@ -557,77 +699,38 @@ export default function CardSharePage() {
         </div>
       </main>
     )
-  }
-
-  const template = cardTemplates.find((t) => t.id === payload.templateId) || cardTemplates[0]
-  const occasion = cardOccasions.find((o) => o.value === payload.occasionValue) || cardOccasions[0]
-
-  /* ─── Envelope animation state ─── */
-  const [animPhase, setAnimPhase] = useState('envelope') // 'envelope' → 'opening' → 'card-rise' → 'done'
-
-  useEffect(() => {
-    if (status !== 'ok') return
-    const t1 = setTimeout(() => setAnimPhase('opening'), 800)
-    const t2 = setTimeout(() => setAnimPhase('card-rise'), 1600)
-    const t3 = setTimeout(() => setAnimPhase('done'), 2600)
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
-  }, [status])
-
-  const accent = payload.customColor?.accent || template.accentColor || '#f54057'
-
-  if (animPhase !== 'done') {
-    return (
+  } else if (payload) {
+    const template = cardTemplates.find((t) => t.id === payload.templateId) || cardTemplates[0]
+    const occasion = cardOccasions.find((o) => o.value === payload.occasionValue) || cardOccasions[0]
+    content = (
       <main className={styles.page} style={payload.screenBgColor ? { background: payload.screenBgColor } : undefined}>
-        <div className={styles.envelopeScene}>
-          {/* Envelope body */}
-          <div className={`${styles.envelope} ${animPhase === 'card-rise' ? styles.envelopeFade : ''}`}>
-            {/* Flap (triangle lid) */}
-            <div className={`${styles.envelopeFlap} ${animPhase === 'opening' || animPhase === 'card-rise' ? styles.flapOpen : ''}`} />
-            {/* Flap back (visible when flap is open) */}
-            <div className={styles.envelopeFlapBack} />
-            {/* Envelope body front */}
-            <div className={styles.envelopeBody}>
-              <div className={styles.envelopeInner}>
-                <span className={styles.envelopeHeart} style={{ color: accent }}>&#10084;</span>
-                <span className={styles.envelopeLabel}>With Love</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Card rising out */}
-          <div className={`${styles.cardRise} ${animPhase === 'card-rise' ? styles.cardRiseUp : ''}`}>
-            <CardRender
-              template={template}
-              recipientName={payload.recipientName}
-              senderName={payload.senderName}
-              message={payload.message}
-              occasion={occasion}
-              media={payload.media}
-              customColor={payload.customColor}
-            />
-          </div>
+        <div className={styles.wrapper}>
+          <p className={styles.meta} style={payload.screenBgColor && (payload.screenBgColor.startsWith('#0') || payload.screenBgColor.startsWith('#1') || payload.screenBgColor.startsWith('#4c')) ? { color: 'rgba(255,255,255,0.6)' } : undefined}>
+            Shared with love
+          </p>
+          <CardRender
+            template={template}
+            recipientName={payload.recipientName}
+            senderName={payload.senderName}
+            message={payload.message}
+            occasion={occasion}
+            media={payload.media}
+            customColor={payload.customColor}
+          />
         </div>
       </main>
     )
   }
 
   return (
-    <main className={styles.page} style={payload.screenBgColor ? { background: payload.screenBgColor } : undefined}>
-      <div className={`${styles.wrapper} ${styles.wrapperFadeIn}`}>
-        <p className={styles.meta} style={payload.screenBgColor && (payload.screenBgColor.startsWith('#0') || payload.screenBgColor.startsWith('#1') || payload.screenBgColor.startsWith('#4c')) ? { color: 'rgba(255,255,255,0.6)' } : undefined}>
-          Shared with love
-        </p>
-
-        <CardRender
-          template={template}
-          recipientName={payload.recipientName}
-          senderName={payload.senderName}
-          message={payload.message}
-          occasion={occasion}
-          media={payload.media}
-          customColor={payload.customColor}
+    <>
+      {content}
+      {!revealed && (
+        <CardRevealAnimation
+          onComplete={() => setRevealed(true)}
+          dataLoaded={dataLoaded}
         />
-      </div>
-    </main>
+      )}
+    </>
   )
 }
